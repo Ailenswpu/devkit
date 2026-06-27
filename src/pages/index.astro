@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolGrid from '../components/ToolGrid.astro';
+import { SITE_NAME, SITE_TAGLINE, websiteLD } from '../lib/seo';
+import { TOOLS } from '../data/tools';
+
+const title = `${SITE_NAME} — ${SITE_TAGLINE}`;
+const description = 'A growing set of fast, private developer tools — JSON, Base64, regex, hashes, UUIDs, color, QR codes and more. 100% client-side, no signup.';
+---
+<BaseLayout title={title} description={description} path="/" jsonLd={[websiteLD()]}>
+  <section class="max-w-6xl mx-auto px-4 pt-12 md:pt-16 pb-6">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">Developer tools<br />that respect your data.</h1>
+      <p class="mt-4 text-lg text-muted">
+        {TOOLS.length}+ tools for JSON, encoding, text, crypto, color and more — running entirely in your browser. No accounts. No uploads. No tracking.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <a href="/json-formatter" class="btn btn-primary">Try JSON Formatter</a>
+        <button id="open-cmdk" class="btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          Search tools
+          <span class="kbd ml-1">⌘K</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 pb-16">
+    <ToolGrid />
+  </section>
+</BaseLayout>

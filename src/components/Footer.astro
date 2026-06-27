@@ -1,0 +1,38 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-border mt-16">
+  <div class="max-w-6xl mx-auto px-4 py-10 grid gap-6 sm:grid-cols-2 md:grid-cols-4 text-sm">
+    <div>
+      <div class="font-semibold mb-2">DevKit</div>
+      <p class="text-muted">Fast, private developer tools — 100% in your browser.</p>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Tools</div>
+      <ul class="space-y-1 text-muted">
+        <li><a class="hover:text-fg" href="/tools">All tools</a></li>
+        <li><a class="hover:text-fg" href="/json-formatter">JSON Formatter</a></li>
+        <li><a class="hover:text-fg" href="/base64">Base64</a></li>
+        <li><a class="hover:text-fg" href="/uuid-generator">UUID Generator</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Site</div>
+      <ul class="space-y-1 text-muted">
+        <li><a class="hover:text-fg" href="/about">About</a></li>
+        <li><a class="hover:text-fg" href="/privacy">Privacy</a></li>
+        <li><a class="hover:text-fg" href="/changelog">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Privacy promise</div>
+      <p class="text-muted">Everything runs client-side. No accounts, no uploads, no tracking cookies.</p>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-xs text-muted flex justify-between">
+      <span>© {year} DevKit</span>
+      <span>Built with Astro · Cloudflare Pages</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TOOLS } from '../data/tools';
+---
+<BaseLayout title="Changelog — DevKit" description="Recent updates to DevKit." path="/changelog">
+  <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
+    <h1 class="text-3xl font-semibold tracking-tight">Changelog</h1>
+    <h2>0.1.0 — Initial release</h2>
+    <ul>
+      <li>{TOOLS.length} tools across JSON, encoding, text, crypto, color and web categories.</li>
+      <li>Dark/light themes, command palette, copy-everywhere UX.</li>
+      <li>100% client-side execution with strict CSP and JSON-LD on every tool page.</li>
+    </ul>
+  </article>
+</BaseLayout>

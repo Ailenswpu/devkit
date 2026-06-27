@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolGrid from '../components/ToolGrid.astro';
+import { SITE_NAME } from '../lib/seo';
+import { TOOLS } from '../data/tools';
+---
+<BaseLayout
+  title={`All tools — ${SITE_NAME}`}
+  description={`Browse all ${TOOLS.length} developer tools on DevKit. JSON, Base64, regex, hashes and more — all client-side and free.`}
+  path="/tools"
+>
+  <section class="max-w-6xl mx-auto px-4 pt-10 pb-16">
+    <h1 class="text-3xl font-semibold tracking-tight">All tools</h1>
+    <p class="mt-2 text-muted">{TOOLS.length} tools, organized by category. Hit <span class="kbd">⌘K</span> from any page to search.</p>
+    <div class="mt-8"><ToolGrid /></div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import ThemeToggle from './ThemeToggle';
+---
+<header class="border-b border-border bg-bg/80 backdrop-blur sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+      <span class="inline-flex w-7 h-7 rounded-lg bg-accent text-accent-fg items-center justify-center font-bold">D</span>
+      <span>DevKit</span>
+    </a>
+    <nav class="flex items-center gap-2 text-sm">
+      <a href="/tools" class="btn btn-ghost">All tools</a>
+      <button
+        type="button"
+        id="open-cmdk"
+        class="btn"
+        aria-label="Open command palette"
+      >
+        <span class="text-muted">Search…</span>
+        <span class="kbd ml-2">⌘K</span>
+      </button>
+      <ThemeToggle client:idle />
+    </nav>
+  </div>
+</header>

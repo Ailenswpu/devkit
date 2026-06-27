@@ -1,0 +1,127 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { type Tool, relatedTools } from '../data/tools';
+import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD } from '../lib/seo';
+
+import JsonFormatter from '../components/tools/JsonFormatter';
+import Base64Tool from '../components/tools/Base64Tool';
+import UrlEncode from '../components/tools/UrlEncode';
+import HtmlEntities from '../components/tools/HtmlEntities';
+import JwtDecoder from '../components/tools/JwtDecoder';
+import HashGenerator from '../components/tools/HashGenerator';
+import UuidGenerator from '../components/tools/UuidGenerator';
+import RegexTester from '../components/tools/RegexTester';
+import CaseConverter from '../components/tools/CaseConverter';
+import TextDiff from '../components/tools/TextDiff';
+import LineTools from '../components/tools/LineTools';
+import NumberBase from '../components/tools/NumberBase';
+import ColorConverter from '../components/tools/ColorConverter';
+import QrCode from '../components/tools/QrCode';
+import LoremIpsum from '../components/tools/LoremIpsum';
+import MarkdownPreview from '../components/tools/MarkdownPreview';
+import JsonToCsv from '../components/tools/JsonToCsv';
+import JsonToYaml from '../components/tools/JsonToYaml';
+
+export interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const related = relatedTools(tool);
+const jsonLd = [softwareApplicationLD(tool), breadcrumbLD(tool), faqLD(tool)];
+
+const cid = tool.componentId;
+---
+<BaseLayout
+  title={toolTitle(tool)}
+  description={tool.description}
+  path={`/${tool.slug}`}
+  jsonLd={jsonLd}
+>
+  <div class="max-w-6xl mx-auto px-4 pt-8 pb-16">
+    <nav aria-label="Breadcrumb" class="text-xs text-muted mb-3">
+      <ol class="flex items-center gap-1">
+        <li><a class="hover:text-fg" href="/">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-fg" href="/tools">{tool.category}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-fg">{tool.title}</li>
+      </ol>
+    </nav>
+
+    <header class="mb-6">
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">{tool.h1}</h1>
+      <p class="mt-2 text-muted max-w-2xl">{tool.subtitle}</p>
+      <div class="mt-3 flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border text-muted">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          100% client-side
+        </span>
+        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border text-muted">No upload</span>
+        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border text-muted">Free · no signup</span>
+      </div>
+    </header>
+
+    <section aria-label={`${tool.title} workspace`} class="tool-shell card p-4 md:p-6">
+      {cid === 'JsonFormatter' && <JsonFormatter client:load />}
+      {cid === 'Base64Tool' && <Base64Tool client:load />}
+      {cid === 'UrlEncode' && <UrlEncode client:load />}
+      {cid === 'HtmlEntities' && <HtmlEntities client:load />}
+      {cid === 'JwtDecoder' && <JwtDecoder client:load />}
+      {cid === 'HashGenerator' && <HashGenerator client:load />}
+      {cid === 'UuidGenerator' && <UuidGenerator client:load />}
+      {cid === 'RegexTester' && <RegexTester client:load />}
+      {cid === 'CaseConverter' && <CaseConverter client:load />}
+      {cid === 'TextDiff' && <TextDiff client:load />}
+      {cid === 'LineTools' && <LineTools client:load />}
+      {cid === 'NumberBase' && <NumberBase client:load />}
+      {cid === 'ColorConverter' && <ColorConverter client:load />}
+      {cid === 'QrCode' && <QrCode client:load />}
+      {cid === 'LoremIpsum' && <LoremIpsum client:load />}
+      {cid === 'MarkdownPreview' && <MarkdownPreview client:only="preact" />}
+      {cid === 'JsonToCsv' && <JsonToCsv client:load />}
+      {cid === 'JsonToYaml' && <JsonToYaml client:load />}
+    </section>
+
+    <section class="mt-10 grid gap-8 md:grid-cols-3">
+      <article class="md:col-span-2 prose-tool">
+        <h2>What is {tool.title}?</h2>
+        <p>{tool.intro}</p>
+
+        <h2>How to use</h2>
+        <ol>
+          {tool.howto.map(step => <li>{step}</li>)}
+        </ol>
+
+        <h2>Frequently asked questions</h2>
+        <div class="space-y-2 mt-3">
+          {tool.faq.map(f => (
+            <details class="card p-4">
+              <summary class="cursor-pointer font-medium">{f.q}</summary>
+              <p class="mt-2 text-sm text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </article>
+
+      <aside class="space-y-4">
+        <div class="card p-4">
+          <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-2">Privacy</div>
+          <p class="text-sm text-muted">
+            This tool runs entirely in your browser. Your input is never uploaded, logged or shared.
+          </p>
+        </div>
+        {related.length > 0 && (
+          <div class="card p-4">
+            <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-2">Related tools</div>
+            <ul class="space-y-1 text-sm">
+              {related.map(r => (
+                <li><a class="hover:text-fg text-accent" href={`/${r.slug}`}>{r.title}</a><div class="text-xs text-muted">{r.subtitle}</div></li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </section>
+  </div>
+</BaseLayout>

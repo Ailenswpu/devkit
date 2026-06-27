@@ -1,0 +1,30 @@
+---
+import { TOOLS, CATEGORIES, toolsByCategory } from '../data/tools';
+
+const grouped = toolsByCategory();
+---
+<div class="space-y-10">
+  {CATEGORIES.map(cat => (
+    grouped[cat.id].length > 0 && (
+      <section aria-labelledby={`cat-${cat.id}`}>
+        <header class="mb-3 flex items-baseline justify-between">
+          <h2 id={`cat-${cat.id}`} class="text-sm font-semibold uppercase tracking-wider text-muted">{cat.label}</h2>
+          <span class="text-xs text-muted">{cat.blurb}</span>
+        </header>
+        <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {grouped[cat.id].map(t => (
+            <li>
+              <a
+                href={`/${t.slug}`}
+                class="card p-4 block h-full transition-all hover:border-accent/60 hover:translate-y-[-1px]"
+              >
+                <div class="font-medium tracking-tight">{t.title}</div>
+                <div class="text-xs text-muted mt-1 line-clamp-2">{t.subtitle}</div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  ))}
+</div>
