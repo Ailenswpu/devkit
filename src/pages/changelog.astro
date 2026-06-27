@@ -1,15 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { TOOLS } from '../data/tools';
+import { CHANGELOG } from '../data/changelog';
 ---
-<BaseLayout title="Changelog — DevKit" description="Recent updates to DevKit." path="/changelog">
+<BaseLayout title="Changelog — DevKit" description="Recent updates and new tools on DevKit." path="/changelog">
   <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
-    <h1 class="text-3xl font-semibold tracking-tight">Changelog</h1>
-    <h2>0.1.0 — Initial release</h2>
-    <ul>
-      <li>{TOOLS.length} tools across JSON, encoding, text, crypto, color and web categories.</li>
-      <li>Dark/light themes, command palette, copy-everywhere UX.</li>
-      <li>100% client-side execution with strict CSP and JSON-LD on every tool page.</li>
-    </ul>
+    <header class="flex items-baseline justify-between flex-wrap gap-2">
+      <h1 class="text-3xl font-semibold tracking-tight">Changelog</h1>
+      <a href="/feed.xml" class="text-sm text-accent hover:underline" rel="alternate" type="application/rss+xml">
+        Subscribe via RSS →
+      </a>
+    </header>
+
+    <p class="text-muted mt-2">Follow new tools and improvements. The RSS feed is updated with every release.</p>
+
+    <div class="mt-8 space-y-10">
+      {CHANGELOG.map((e) => (
+        <section id={e.version}>
+          <header class="flex items-baseline gap-3 flex-wrap">
+            <h2 class="!mt-0">{e.version}</h2>
+            <span class="text-sm text-muted">{e.date}</span>
+          </header>
+          <p class="font-medium">{e.title}</p>
+          <p class="text-muted">{e.summary}</p>
+          <ul>
+            {e.items.map((i) => <li>{i}</li>)}
+          </ul>
+        </section>
+      ))}
+    </div>
   </article>
 </BaseLayout>

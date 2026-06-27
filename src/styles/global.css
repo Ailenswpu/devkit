@@ -46,7 +46,7 @@ a { color: inherit; }
   outline: none;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
-.tool-shell textarea { resize: vertical; min-height: 180px; }
+.tool-shell textarea { resize: vertical; min-height: 320px; font-size: 13px; line-height: 1.55; }
 .tool-shell input:focus,
 .tool-shell textarea:focus,
 .tool-shell select:focus {

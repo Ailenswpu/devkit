@@ -12,7 +12,8 @@
     "deploy:preview": "npm run build && wrangler pages deploy --branch=preview",
     "cf:login": "wrangler login",
     "cf:whoami": "wrangler whoami",
-    "cf:tail": "wrangler pages deployment tail --project-name=inbrowser"
+    "cf:tail": "wrangler pages deployment tail --project-name=inbrowser",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.13",

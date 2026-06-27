@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { type Tool, relatedTools } from '../data/tools';
-import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD } from '../lib/seo';
+import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD, howToLD } from '../lib/seo';
 
 import JsonFormatter from '../components/tools/JsonFormatter';
 import Base64Tool from '../components/tools/Base64Tool';
@@ -28,7 +28,7 @@ export interface Props {
 
 const { tool } = Astro.props;
 const related = relatedTools(tool);
-const jsonLd = [softwareApplicationLD(tool), breadcrumbLD(tool), faqLD(tool)];
+const jsonLd = [softwareApplicationLD(tool), breadcrumbLD(tool), howToLD(tool), faqLD(tool)];
 
 const cid = tool.componentId;
 ---
