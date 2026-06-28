@@ -4,8 +4,19 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 
 const ROOT = path.resolve('dist');
-const PORT = 4321;
 const csp = readHeader('Content-Security-Policy');
+const ALLOWED_EXTERNAL_HOSTS = new Set([
+  'static.cloudflareinsights.com',
+  'cloudflareinsights.com',
+  'pagead2.googlesyndication.com',
+  'partner.googleadservices.com',
+  'adservice.google.com',
+  'googleads.g.doubleclick.net',
+  'tpc.googlesyndication.com',
+  'ep1.adtrafficquality.google',
+  'ep2.adtrafficquality.google',
+  'www.google.com',
+]);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -42,7 +53,7 @@ function serve() {
         res.end(String(e));
       }
     });
-    server.listen(PORT, () => resolve(server));
+    server.listen(0, '127.0.0.1', () => resolve(server));
   });
 }
 
@@ -81,32 +92,39 @@ const tools = [
 const server = await serve();
 const browser = await chromium.launch();
 try {
+  const address = server.address();
+  const port = typeof address === 'object' && address ? address.port : 0;
+  const baseUrl = `http://127.0.0.1:${port}`;
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
   let networkOut = [];
   page.on('request', (req) => {
     const u = req.url();
-    if (!u.startsWith(`http://localhost:${PORT}`) && !u.startsWith('data:')) networkOut.push(u);
+    if (!u.startsWith(baseUrl) && !u.startsWith('data:')) networkOut.push(u);
   });
 
   console.log('Homepage');
-  await check(page, `http://localhost:${PORT}/`, async (p) => {
+  await check(page, `${baseUrl}/`, async (p) => {
     const t = await p.title();
     if (!t.includes('DevKit')) throw new Error(`title missing: ${t}`);
     const links = await p.$$eval('a[href^="/"]', as => as.map(a => a.getAttribute('href')));
     if (!links.includes('/json-formatter')) throw new Error('homepage missing tool link');
+    const github = await p.$('a[href="https://github.com/Ailenswpu/devkit"]');
+    const contact = await p.$('a[href="mailto:support@inbrowser.sh"]');
+    if (!github) throw new Error('homepage missing GitHub link');
+    if (!contact) throw new Error('homepage missing contact email link');
     return `title ok, ${links.length} internal links`;
   }, 'index');
 
   console.log('Tools index');
-  await check(page, `http://localhost:${PORT}/tools`, async (p) => {
+  await check(page, `${baseUrl}/tools`, async (p) => {
     const count = await p.$$eval('a[href^="/"]', as => as.filter(a => /^\/[a-z]+(?:-[a-z]+)+$/.test(a.getAttribute('href') || '')).length);
     return `${count} tool cards`;
   }, 'tools');
 
   console.log('Trust pages');
-  for (const route of ['about', 'contact', 'privacy', 'terms', 'advertising', 'changelog']) {
-    await check(page, `http://localhost:${PORT}/${route}`, async (p) => {
+  for (const route of ['about', 'contact', 'privacy', 'terms', 'advertising', 'changelog', 'blog']) {
+    await check(page, `${baseUrl}/${route}`, async (p) => {
       const h1 = await p.$eval('h1', el => el.textContent?.trim() || '');
       if (!h1) throw new Error(`${route} missing h1`);
       const text = await p.$eval('main', el => el.textContent || '');
@@ -115,30 +133,58 @@ try {
     }, route);
   }
 
+  console.log('Blog posts');
+  for (const route of [
+    'why-client-side-developer-tools-are-safer',
+    'json-formatting-checklist-before-sharing-api-data',
+    'how-to-debug-jwt-payloads-without-leaking-secrets',
+    'choosing-the-right-identifier-uuid-ulid-nanoid',
+    'markdown-preview-safety-for-documentation-workflows',
+  ]) {
+    await check(page, `${baseUrl}/blog/${route}`, async (p) => {
+      const h1 = await p.$eval('h1', el => el.textContent?.trim() || '');
+      const sectionCount = await p.$$eval('article section h2', els => els.length);
+      const text = await p.$eval('article', el => el.textContent || '');
+      if (!h1) throw new Error(`${route} missing h1`);
+      if (sectionCount < 4) throw new Error(`${route} has too few sections`);
+      if (text.length < 2500) throw new Error(`${route} content too thin`);
+      return `${h1} (${sectionCount} sections)`;
+    }, route);
+  }
+
   console.log('Static text files');
-  for (const file of ['robots.txt','llms.txt','llms-full.txt','sitemap-index.xml']) {
-    await check(page, `http://localhost:${PORT}/${file}`, async (p) => {
+  for (const file of ['robots.txt','llms.txt','llms-full.txt','sitemap-index.xml','ads.txt']) {
+    await check(page, `${baseUrl}/${file}`, async (p) => {
       const body = await p.content();
       if (!body || body.length < 20) throw new Error(`empty ${file}`);
+      if (file === 'ads.txt' && !body.includes('google.com, pub-4423552696854564, DIRECT, f08c47fec0942fa0')) {
+        throw new Error('ads.txt publisher line missing');
+      }
       return `${file} (${body.length} bytes)`;
     }, file);
   }
 
   console.log('SEO meta');
-  await check(page, `http://localhost:${PORT}/json-formatter`, async (p) => {
+  await check(page, `${baseUrl}/json-formatter`, async (p) => {
     const desc = await p.$eval('meta[name="description"]', el => el.getAttribute('content'));
     const canonical = await p.$eval('link[rel="canonical"]', el => el.getAttribute('href'));
+    const ogImage = await p.$eval('meta[property="og:image"]', el => el.getAttribute('content'));
+    const ogImageType = await p.$eval('meta[property="og:image:type"]', el => el.getAttribute('content'));
+    const adsense = await p.$eval('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]', el => el.getAttribute('src'));
     const lds = await p.$$eval('script[type="application/ld+json"]', els => els.map(e => JSON.parse(e.textContent || '')));
     if (!desc?.includes('JSON')) throw new Error('description missing');
     if (!canonical?.endsWith('/json-formatter')) throw new Error('canonical mismatch');
+    if (!ogImage?.endsWith('/og-default.png')) throw new Error('OG image mismatch');
+    if (ogImageType !== 'image/png') throw new Error('OG image type mismatch');
+    if (!adsense?.includes('client=ca-pub-4423552696854564')) throw new Error('AdSense client script missing');
     const types = lds.map(l => l['@type']);
     for (const t of ['SoftwareApplication', 'BreadcrumbList', 'FAQPage']) if (!types.includes(t)) throw new Error(`missing JSON-LD ${t}`);
-    return `desc ok, canonical ok, JSON-LD ${types.join('+')}`;
+    return `desc ok, canonical ok, AdSense ok, JSON-LD ${types.join('+')}`;
   }, 'json-formatter SEO');
 
   console.log('Tool islands hydrate & work');
   // JSON Formatter
-  await check(page, `http://localhost:${PORT}/json-formatter`, async (p) => {
+  await check(page, `${baseUrl}/json-formatter`, async (p) => {
     await p.waitForSelector('textarea[aria-label="JSON input"]');
     await p.fill('textarea[aria-label="JSON input"]', '{"a":1,"b":[2,3]}');
     await p.waitForFunction(() => {
@@ -149,7 +195,7 @@ try {
   }, 'JsonFormatter island');
 
   // Base64
-  await check(page, `http://localhost:${PORT}/base64`, async (p) => {
+  await check(page, `${baseUrl}/base64`, async (p) => {
     await p.fill('textarea[aria-label="Input"]', 'hello');
     await p.waitForFunction(() => {
       const out = document.querySelectorAll('textarea[aria-label="Output"]')[0];
@@ -170,7 +216,7 @@ try {
   }, 'Base64 island');
 
   // HTML entities
-  await check(page, `http://localhost:${PORT}/html-entities`, async (p) => {
+  await check(page, `${baseUrl}/html-entities`, async (p) => {
     await p.getByRole('tab', { name: 'Decode' }).click();
     await p.fill('textarea[aria-label="Input"]', '&#128640; &amp; &lt;tag&gt;');
     await p.waitForFunction(() => {
@@ -181,7 +227,7 @@ try {
   }, 'HtmlEntities island');
 
   // Hash generator
-  await check(page, `http://localhost:${PORT}/hash-generator`, async (p) => {
+  await check(page, `${baseUrl}/hash-generator`, async (p) => {
     await p.fill('textarea[aria-label="Text to hash"]', 'abc');
     await p.waitForFunction(() => {
       const codes = Array.from(document.querySelectorAll('code')).map(c => c.textContent || '');
@@ -191,7 +237,7 @@ try {
   }, 'HashGenerator island');
 
   // UUID
-  await check(page, `http://localhost:${PORT}/uuid-generator`, async (p) => {
+  await check(page, `${baseUrl}/uuid-generator`, async (p) => {
     const out = await p.$eval('textarea[aria-label="Generated IDs"]', el => el.value.split('\n').filter(Boolean).length);
     if (out < 1) throw new Error('no IDs');
     await p.locator('label', { hasText: 'Count' }).locator('input').fill('');
@@ -202,7 +248,7 @@ try {
   }, 'UuidGenerator island');
 
   // Lorem Ipsum
-  await check(page, `http://localhost:${PORT}/lorem-ipsum`, async (p) => {
+  await check(page, `${baseUrl}/lorem-ipsum`, async (p) => {
     await p.locator('label', { hasText: 'Count' }).locator('input').fill('');
     await p.waitForFunction(() => {
       const input = document.querySelector('input[type="number"]');
@@ -213,7 +259,7 @@ try {
   }, 'LoremIpsum island');
 
   // Number Base
-  await check(page, `http://localhost:${PORT}/number-base`, async (p) => {
+  await check(page, `${baseUrl}/number-base`, async (p) => {
     await p.fill('input[aria-label="Decimal"]', '255');
     await p.waitForFunction(() => {
       const hex = document.querySelector('input[aria-label="Hexadecimal"]');
@@ -224,15 +270,23 @@ try {
 
   // 404
   console.log('404 page');
-  const r = await page.goto(`http://localhost:${PORT}/this-does-not-exist`);
+  const r = await page.goto(`${baseUrl}/this-does-not-exist`);
   if (r.status() !== 404) throw new Error('expected 404');
   console.log('  ✓ 404 served');
 
-  if (networkOut.length) {
-    console.log('External network requests:', networkOut);
-    throw new Error('External network detected — privacy claim broken.');
+  const unexpectedNetwork = networkOut.filter((url) => {
+    try {
+      return !ALLOWED_EXTERNAL_HOSTS.has(new URL(url).hostname);
+    } catch {
+      return true;
+    }
+  });
+  if (unexpectedNetwork.length) {
+    console.log('Unexpected external network requests:', unexpectedNetwork);
+    throw new Error('Unexpected external network detected.');
   } else {
-    console.log('Privacy: ✓ no external network requests during smoke run');
+    const hosts = [...new Set(networkOut.map((url) => new URL(url).hostname))].sort();
+    console.log(`Privacy: ✓ external requests limited to allowlist${hosts.length ? ` (${hosts.join(', ')})` : ''}`);
   }
 
   console.log('\nALL SMOKE TESTS PASSED');

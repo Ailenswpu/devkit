@@ -4,6 +4,9 @@ export const SITE_NAME = 'DevKit';
 export const SITE_URL = 'https://inbrowser.sh';
 export const SITE_TAGLINE = 'Fast, private developer tools — 100% in your browser.';
 export const CONTACT_EMAIL = 'support@inbrowser.sh';
+export const GITHUB_URL = 'https://github.com/Ailenswpu/devkit';
+export const ADSENSE_PUBLISHER_ID = 'pub-4423552696854564';
+export const ADSENSE_CLIENT_ID = `ca-${ADSENSE_PUBLISHER_ID}`;
 
 // Bing Webmaster Tools site verification. Paste the value from
 // bing.com/webmasters → Add site → "HTML Meta Tag" method.

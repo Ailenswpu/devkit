@@ -1,4 +1,5 @@
 ---
+import { BookOpen, Info, Mail, Search, Wrench } from 'lucide-preact';
 import ThemeToggle from './ThemeToggle';
 ---
 <header class="border-b border-border bg-bg/80 backdrop-blur sticky top-0 z-30">
@@ -7,16 +8,30 @@ import ThemeToggle from './ThemeToggle';
       <span class="inline-flex w-7 h-7 rounded-lg bg-accent text-accent-fg items-center justify-center font-bold">D</span>
       <span>DevKit</span>
     </a>
-    <nav class="flex items-center gap-2 text-sm">
-      <a href="/about" class="btn btn-ghost hidden sm:inline-flex">About</a>
-      <a href="/contact" class="btn btn-ghost hidden sm:inline-flex">Contact</a>
-      <a href="/tools" class="btn btn-ghost">All tools</a>
+    <nav class="flex items-center gap-2 text-sm" aria-label="Primary navigation">
+      <a href="/blog" class="nav-btn hidden lg:inline-flex">
+        <BookOpen size={15} aria-hidden="true" />
+        Blog
+      </a>
+      <a href="/about" class="nav-btn hidden md:inline-flex">
+        <Info size={15} aria-hidden="true" />
+        About
+      </a>
+      <a href="/contact" class="nav-btn hidden sm:inline-flex">
+        <Mail size={15} aria-hidden="true" />
+        Contact
+      </a>
+      <a href="/tools" class="nav-btn nav-btn-primary">
+        <Wrench size={15} aria-hidden="true" />
+        All tools
+      </a>
       <button
         type="button"
         id="open-cmdk"
-        class="btn"
+        class="nav-btn"
         aria-label="Open command palette"
       >
+        <Search size={15} aria-hidden="true" />
         <span class="text-muted">Search…</span>
         <span class="kbd ml-2">⌘K</span>
       </button>

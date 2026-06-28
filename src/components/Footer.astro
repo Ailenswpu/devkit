@@ -1,11 +1,36 @@
 ---
+import { Github, Mail } from 'lucide-preact';
+import { CONTACT_EMAIL, GITHUB_URL } from '../lib/seo';
+
 const year = new Date().getFullYear();
 ---
 <footer class="border-t border-border mt-16">
   <div class="max-w-6xl mx-auto px-4 py-10 grid gap-6 sm:grid-cols-2 md:grid-cols-4 text-sm">
     <div>
       <div class="font-semibold mb-2">DevKit</div>
-      <p class="text-muted">Fast, private developer tools — 100% in your browser.</p>
+      <p class="text-muted leading-6">
+        Fast, private developer tools for development, testing, demos, and everyday formatting work.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <a
+          class="btn"
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open DevKit on GitHub"
+        >
+          <Github size={16} aria-hidden="true" />
+          GitHub
+        </a>
+        <a
+          class="btn"
+          href={`mailto:${CONTACT_EMAIL}`}
+          aria-label={`Email ${CONTACT_EMAIL}`}
+        >
+          <Mail size={16} aria-hidden="true" />
+          Contact Us
+        </a>
+      </div>
     </div>
     <div>
       <div class="font-semibold mb-2">Tools</div>
@@ -19,6 +44,7 @@ const year = new Date().getFullYear();
     <div>
       <div class="font-semibold mb-2">Site</div>
       <ul class="space-y-1 text-muted">
+        <li><a class="hover:text-fg" href="/blog">Blog</a></li>
         <li><a class="hover:text-fg" href="/about">About</a></li>
         <li><a class="hover:text-fg" href="/contact">Contact</a></li>
         <li><a class="hover:text-fg" href="/privacy">Privacy</a></li>
