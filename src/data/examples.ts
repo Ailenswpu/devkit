@@ -47,7 +47,7 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
   'regex-tester': {
     input: 'pattern: (\\w+)@(\\w+\\.\\w+), test: hello@devkit.tools',
     output: 'Match: hello@devkit.tools | Group 1: hello | Group 2: devkit.tools',
-    note: 'Each run has a 1s timeout to prevent ReDoS catastrophic backtracking.',
+    note: 'Large inputs are capped and match loops are guarded to reduce browser lockups.',
   },
   'case-converter': {
     input: 'Hello World',
@@ -72,7 +72,7 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
   },
   'qr-code': {
     input: 'https://inbrowser.sh',
-    output: 'Downloadable PNG / SVG QR code, error-correction level M.',
+    output: 'Downloadable PNG QR code, error-correction level M.',
     note: 'Wi-Fi, vCard, and arbitrary text are also supported.',
   },
   'lorem-ipsum': {

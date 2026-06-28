@@ -266,7 +266,7 @@ export const TOOLS: Tool[] = [
     ],
     faq: [
       { q: 'What regex flavor does it use?', a: 'JavaScript (ECMAScript) regex via the native RegExp engine.' },
-      { q: 'Is it safe against catastrophic backtracking?', a: 'Yes — each evaluation runs with a 1s timeout and input length cap to prevent ReDoS.' },
+      { q: 'Is it safe against catastrophic backtracking?', a: 'The tester caps input size and guards long match loops to reduce browser lockups, but complex patterns can still be expensive.' },
       { q: 'Can I share a pattern?', a: 'URL sharing is on the roadmap; for now copy/paste both pattern and flags.' },
     ],
     componentId: 'RegexTester',
@@ -381,7 +381,7 @@ export const TOOLS: Tool[] = [
     title: 'QR Code',
     h1: 'QR Code Generator',
     subtitle: 'Generate QR codes for URLs, Wi-Fi credentials and text — fully offline.',
-    description: 'Free online QR code generator. Encode URLs, text, Wi-Fi creds. Local SVG/PNG output — your data never leaves your browser.',
+    description: 'Free online QR code generator. Encode URLs, text and Wi-Fi credentials. Local PNG output — your data never leaves your browser.',
     category: 'Generators',
     keywords: ['qr code generator', 'qr code', 'wifi qr code'],
     related: ['uuid-generator', 'lorem-ipsum'],
@@ -414,7 +414,7 @@ export const TOOLS: Tool[] = [
     ],
     faq: [
       { q: 'Why use Lorem Ipsum?', a: 'It avoids drawing attention to copy in a layout, so reviewers focus on visual design.' },
-      { q: 'Can I get real English?', a: 'Use the "Hipster" or "English" variant from the dropdown.' },
+      { q: 'Can I change the output length?', a: 'Yes. Pick words, sentences or paragraphs, then set the count before generating.' },
     ],
     componentId: 'LoremIpsum',
   },

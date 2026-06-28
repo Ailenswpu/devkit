@@ -104,6 +104,17 @@ try {
     return `${count} tool cards`;
   }, 'tools');
 
+  console.log('Trust pages');
+  for (const route of ['about', 'contact', 'privacy', 'terms', 'advertising', 'changelog']) {
+    await check(page, `http://localhost:${PORT}/${route}`, async (p) => {
+      const h1 = await p.$eval('h1', el => el.textContent?.trim() || '');
+      if (!h1) throw new Error(`${route} missing h1`);
+      const text = await p.$eval('main', el => el.textContent || '');
+      if (text.length < 300) throw new Error(`${route} content too thin`);
+      return h1;
+    }, route);
+  }
+
   console.log('Static text files');
   for (const file of ['robots.txt','llms.txt','llms-full.txt','sitemap-index.xml']) {
     await check(page, `http://localhost:${PORT}/${file}`, async (p) => {

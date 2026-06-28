@@ -1,18 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolGrid from '../components/ToolGrid.astro';
-import { SITE_NAME, SITE_TAGLINE, websiteLD } from '../lib/seo';
+import { SITE_NAME, SITE_TAGLINE, organizationLD, websiteLD } from '../lib/seo';
 import { TOOLS } from '../data/tools';
 
 const title = `${SITE_NAME} — ${SITE_TAGLINE}`;
 const description = 'A growing set of fast, private developer tools — JSON, Base64, regex, hashes, UUIDs, color, QR codes and more. 100% client-side, no signup.';
 ---
-<BaseLayout title={title} description={description} path="/" jsonLd={[websiteLD()]}>
+<BaseLayout title={title} description={description} path="/" jsonLd={[websiteLD(), organizationLD()]}>
   <section class="max-w-6xl mx-auto px-4 pt-12 md:pt-16 pb-6">
     <div class="max-w-3xl">
       <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">Developer tools<br />that respect your data.</h1>
       <p class="mt-4 text-lg text-muted">
-        {TOOLS.length}+ tools for JSON, encoding, text, crypto, color and more — running entirely in your browser. No accounts. No uploads. No tracking.
+        {TOOLS.length}+ tools for JSON, encoding, text, crypto, color and more — running entirely in your browser. No accounts. No uploads. No tracking cookies.
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         <a href="/json-formatter" class="btn btn-primary">Try JSON Formatter</a>
@@ -27,5 +27,31 @@ const description = 'A growing set of fast, private developer tools — JSON, Ba
 
   <section class="max-w-6xl mx-auto px-4 pb-16">
     <ToolGrid />
+  </section>
+
+  <section class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-14 grid gap-8 md:grid-cols-3">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight">Built for everyday developer chores</h2>
+        <p class="mt-3 text-muted leading-7">
+          DevKit focuses on small, repeatable tasks that interrupt real work: cleaning JSON, decoding tokens,
+          converting identifiers, comparing snippets, generating IDs, and preparing shareable QR codes.
+        </p>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold">Private by design</h3>
+        <p class="mt-2 text-sm text-muted leading-6">
+          Tool logic runs in the browser, so pasted API responses, config snippets, JWT payloads, and draft text
+          do not need to be uploaded for processing.
+        </p>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold">Reviewable outputs</h3>
+        <p class="mt-2 text-sm text-muted leading-6">
+          Every tool page includes plain-language guidance, examples, FAQs, and related tools so users can inspect
+          what the tool does before copying results into their workflow.
+        </p>
+      </div>
+    </div>
   </section>
 </BaseLayout>

@@ -3,6 +3,7 @@ import type { Tool } from '../data/tools';
 export const SITE_NAME = 'DevKit';
 export const SITE_URL = 'https://inbrowser.sh';
 export const SITE_TAGLINE = 'Fast, private developer tools — 100% in your browser.';
+export const CONTACT_EMAIL = 'support@inbrowser.sh';
 
 // Bing Webmaster Tools site verification. Paste the value from
 // bing.com/webmasters → Add site → "HTML Meta Tag" method.
@@ -89,6 +90,22 @@ export function websiteLD() {
       '@type': 'SearchAction',
       target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/tools?q={search_term_string}` },
       'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+export function organizationLD() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_URL,
+    email: CONTACT_EMAIL,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: CONTACT_EMAIL,
+      contactType: 'customer support',
+      availableLanguage: ['en'],
     },
   };
 }

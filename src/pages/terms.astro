@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../lib/seo';
+---
+<BaseLayout
+  title="Terms of Use — DevKit"
+  description="Terms of use for DevKit, a free collection of client-side developer tools."
+  path="/terms"
+>
+  <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
+    <h1 class="text-3xl font-semibold tracking-tight">Terms of Use</h1>
+    <p>
+      DevKit provides free, browser-based developer utilities. By using the site, you agree to use the
+      tools responsibly and to verify outputs before relying on them in production systems.
+    </p>
+
+    <h2>Client-side tools</h2>
+    <p>
+      Tool logic runs in your browser. We do not guarantee that every output is suitable for every use case,
+      and you are responsible for reviewing generated IDs, hashes, encoded text, QR codes, converted data,
+      and other results before use.
+    </p>
+
+    <h2>No professional advice</h2>
+    <p>
+      DevKit is a developer productivity site. It does not provide legal, security, financial, compliance,
+      or professional advice.
+    </p>
+
+    <h2>Acceptable use</h2>
+    <p>
+      Do not use DevKit to attack, disrupt, scrape aggressively, reverse engineer protected systems, or
+      process data that you are not authorized to handle.
+    </p>
+
+    <h2>Availability</h2>
+    <p>
+      The site is provided as-is and may change, move, or be unavailable without notice.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about these terms can be sent to
+      <a class="text-accent" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+    </p>
+  </article>
+</BaseLayout>

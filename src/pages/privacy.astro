@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../lib/seo';
 ---
 <BaseLayout title="Privacy — DevKit" description="DevKit runs entirely in your browser. We don't upload, log or share your input. Read our privacy promise." path="/privacy">
   <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
@@ -10,13 +11,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <li>We do not require an account, store profiles or use tracking cookies.</li>
       <li>Aggregate usage is measured with Cloudflare Web Analytics, which is cookie-less and does not see your input.</li>
     </ol>
+
+    <h2>Tool input and output</h2>
+    <p>
+      Text pasted into formatters, encoders, decoders, generators, QR tools, Markdown preview, and similar
+      utilities is processed locally in your browser. DevKit does not intentionally transmit that content
+      to a server for processing.
+    </p>
+
     <h2>What is stored locally</h2>
     <p>
       Your theme preference (dark/light) is saved in <code>localStorage</code>. You can clear it any time from your browser settings.
     </p>
-    <h2>Security headers</h2>
+
+    <h2>Analytics and advertising</h2>
     <p>
-      We ship a strict Content Security Policy that disallows third-party scripts. If you're curious, view the <code>_headers</code> file in the project repo.
+      DevKit uses Cloudflare Web Analytics to understand aggregate traffic without tracking cookies.
+      If advertising is enabled, Google AdSense or related Google advertising services may load scripts,
+      use cookies or similar technologies, and process ad interactions according to Google's policies.
+      Those ad systems do not need your tool input to run DevKit tools.
+    </p>
+    <p>
+      You can manage browser cookies in your browser settings. Google also provides controls for ad
+      personalization through its own advertising settings.
+    </p>
+
+    <h2>Security headers and third-party services</h2>
+    <p>
+      We ship a Content Security Policy that limits where scripts, fonts, images, and network requests can load from.
+      The policy allows the third-party services needed for analytics and advertising while keeping tool logic client-side.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Privacy questions can be sent to
+      <a class="text-accent" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
     </p>
   </article>
 </BaseLayout>

@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../lib/seo';
+---
+<BaseLayout
+  title="Contact — DevKit"
+  description="Contact DevKit for product feedback, bug reports, privacy questions and advertising policy questions."
+  path="/contact"
+>
+  <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
+    <h1 class="text-3xl font-semibold tracking-tight">Contact</h1>
+    <p>
+      DevKit is maintained as a lightweight browser-first tools site. Use this page for product feedback,
+      bug reports, privacy questions, accessibility issues, or advertising policy questions.
+    </p>
+
+    <h2>Email</h2>
+    <p>
+      Send a message to <a class="text-accent" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      Please include the tool name, browser, operating system, and a short reproduction when reporting a bug.
+    </p>
+
+    <h2>Privacy and security reports</h2>
+    <p>
+      Do not include secrets, private tokens, production JWTs, or confidential customer data in messages.
+      If a report involves sensitive behavior, describe the steps and use redacted sample data.
+    </p>
+
+    <h2>Response expectations</h2>
+    <p>
+      DevKit is a small project, so response time may vary. Critical privacy or security reports are prioritized.
+    </p>
+  </article>
+</BaseLayout>

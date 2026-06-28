@@ -14,7 +14,7 @@ const MAX_INPUT = 100_000;
 export default function RegexTester() {
   const [pattern, setPattern] = useState('(\\w+)@(\\w+\\.\\w+)');
   const [flags, setFlags] = useState('g');
-  const [text, setText] = useState('Contact us at hello@inbrowser.sh or support@example.com');
+  const [text, setText] = useState('Contact us at support@inbrowser.sh or support@example.com');
 
   const result = useMemo(() => {
     if (!pattern) return { matches: [] as RegExpExecArray[], err: '' };

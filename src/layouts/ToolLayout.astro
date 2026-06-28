@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { type Tool, relatedTools } from '../data/tools';
+import { TOOL_EXAMPLES } from '../data/examples';
 import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD, howToLD } from '../lib/seo';
 
 import JsonFormatter from '../components/tools/JsonFormatter';
@@ -29,6 +30,7 @@ export interface Props {
 const { tool } = Astro.props;
 const related = relatedTools(tool);
 const jsonLd = [softwareApplicationLD(tool), breadcrumbLD(tool), howToLD(tool), faqLD(tool)];
+const example = TOOL_EXAMPLES[tool.slug];
 
 const cid = tool.componentId;
 ---
@@ -92,6 +94,33 @@ const cid = tool.componentId;
         <ol>
           {tool.howto.map(step => <li>{step}</li>)}
         </ol>
+
+        {example && (
+          <>
+            <h2>Example</h2>
+            <p>
+              Use this sample to confirm what {tool.title} does before pasting your own data.
+            </p>
+            <div class="grid gap-3 not-prose">
+              <div class="card p-4">
+                <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-2">Input</div>
+                <pre class="overflow-auto text-sm font-mono whitespace-pre-wrap">{example.input}</pre>
+              </div>
+              <div class="card p-4">
+                <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-2">Output</div>
+                <pre class="overflow-auto text-sm font-mono whitespace-pre-wrap">{example.output}</pre>
+              </div>
+              {example.note && <p class="text-sm text-muted">{example.note}</p>}
+            </div>
+          </>
+        )}
+
+        <h2>When to use it</h2>
+        <p>
+          Use {tool.title} for quick local checks, debugging, documentation prep, and one-off conversions where
+          opening a full IDE or command-line workflow would be slower. For production-critical data, always review
+          the output before committing or shipping it.
+        </p>
 
         <h2>Frequently asked questions</h2>
         <div class="space-y-2 mt-3">
