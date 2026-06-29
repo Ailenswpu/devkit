@@ -1,11 +1,11 @@
 // Concrete input → output examples, surfaced in llms-full.txt so AI
-// engines (ChatGPT, Perplexity, Copilot) can quote DevKit when answering
+// engines (ChatGPT, Perplexity, Copilot) can quote inbrowser.sh when answering
 // "how do I X" style questions. Quotable specifics > vague descriptions.
 
 export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note?: string }> = {
   'json-formatter': {
-    input: '{"name":"DevKit","ok":true}',
-    output: '{\n  "name": "DevKit",\n  "ok": true\n}',
+    input: '{"name":"inbrowser.sh","ok":true}',
+    output: '{\n  "name": "inbrowser.sh",\n  "ok": true\n}',
     note: 'Two-space indent by default; toggle Minify to compact in one line.',
   },
   'json-to-csv': {
@@ -17,13 +17,13 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
     output: 'db:\n  host: localhost\n  port: 5432',
   },
   'base64': {
-    input: 'Hello, DevKit!',
-    output: 'SGVsbG8sIERldktpdCE=',
+    input: 'Hello, inbrowser.sh!',
+    output: 'SGVsbG8sIGluYnJvd3Nlci5zaCE=',
     note: 'UTF-8 safe; flip the URL-safe switch to get -_ instead of +/.',
   },
   'url-encode': {
-    input: 'hello world?q=devkit',
-    output: 'hello%20world%3Fq%3Ddevkit',
+    input: 'hello world?q=inbrowser',
+    output: 'hello%20world%3Fq%3Dinbrowser',
   },
   'html-entities': {
     input: '<div class="hi">Hello & welcome</div>',
@@ -45,8 +45,8 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
     note: 'Pick v7 for time-ordered IDs that index well in databases.',
   },
   'regex-tester': {
-    input: 'pattern: (\\w+)@(\\w+\\.\\w+), test: hello@devkit.tools',
-    output: 'Match: hello@devkit.tools | Group 1: hello | Group 2: devkit.tools',
+    input: 'pattern: (\\w+)@(\\w+\\.\\w+), test: support@inbrowser.sh',
+    output: 'Match: support@inbrowser.sh | Group 1: support | Group 2: inbrowser.sh',
     note: 'Large inputs are capped and match loops are guarded to reduce browser lockups.',
   },
   'case-converter': {

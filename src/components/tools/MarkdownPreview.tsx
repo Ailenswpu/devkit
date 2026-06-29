@@ -3,7 +3,7 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { Panel } from './_shared';
 
-const SAMPLE = `# DevKit\n\n**Markdown** preview, _rendered_ in your browser.\n\n- Fast\n- Private\n- No login\n\n\`\`\`js\nconsole.log('hello')\n\`\`\`\n\n[Visit](https://inbrowser.sh)\n`;
+const SAMPLE = `# inbrowser.sh\n\n**Markdown** preview, _rendered_ in your browser.\n\n- Fast\n- Private\n- No login\n\n\`\`\`js\nconsole.log('hello')\n\`\`\`\n\n[Visit](https://inbrowser.sh)\n`;
 
 marked.setOptions({ gfm: true, breaks: false });
 

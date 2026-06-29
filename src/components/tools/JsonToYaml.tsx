@@ -2,7 +2,7 @@ import { useMemo, useState } from 'preact/hooks';
 import yaml from 'js-yaml';
 import { CopyBtn, Panel, Tabs } from './_shared';
 
-const SAMPLE_JSON = JSON.stringify({ name: 'DevKit', features: { private: true, login: false }, tags: ['dev', 'tools'] }, null, 2);
+const SAMPLE_JSON = JSON.stringify({ name: 'inbrowser.sh', features: { private: true, login: false }, tags: ['dev', 'tools'] }, null, 2);
 
 export default function JsonToYaml() {
   const [input, setInput] = useState(SAMPLE_JSON);

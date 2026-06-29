@@ -23,7 +23,7 @@ function decode(str: string, urlSafe: boolean) {
 }
 
 export default function Base64Tool() {
-  const [input, setInput] = useState('Hello, DevKit!');
+  const [input, setInput] = useState('Hello, inbrowser.sh!');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [urlSafe, setUrlSafe] = useState(false);
 

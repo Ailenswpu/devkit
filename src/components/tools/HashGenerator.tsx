@@ -13,7 +13,7 @@ async function digest(algo: Algo, input: string): Promise<string> {
 }
 
 export default function HashGenerator() {
-  const [input, setInput] = useState('Hello, DevKit!');
+  const [input, setInput] = useState('Hello, inbrowser.sh!');
   const [hashes, setHashes] = useState<Record<Algo, string>>({} as any);
 
   useEffect(() => {

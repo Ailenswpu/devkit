@@ -2,7 +2,7 @@ import { useMemo, useState } from 'preact/hooks';
 import { CopyBtn, Panel, Row, Tabs } from './_shared';
 
 export default function UrlEncode() {
-  const [input, setInput] = useState('hello world?q=devkit&page=1');
+  const [input, setInput] = useState('hello world?q=inbrowser&page=1');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
 
   const { out, error } = useMemo(() => {

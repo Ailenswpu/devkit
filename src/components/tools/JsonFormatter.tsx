@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { CopyBtn, Panel, Row, Tabs } from './_shared';
 
-const SAMPLE = `{"name":"DevKit","version":"1.0.0","tags":["dev","tools"],"features":{"private":true,"login":false}}`;
+const SAMPLE = `{"name":"inbrowser.sh","version":"1.0.0","tags":["dev","tools"],"features":{"private":true,"login":false}}`;
 
 export default function JsonFormatter() {
   const [input, setInput] = useState(SAMPLE);

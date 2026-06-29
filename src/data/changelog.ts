@@ -15,7 +15,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: '2026-06-27',
     title: 'Initial release — 18 client-side dev tools',
     summary:
-      'First public release of DevKit. Eighteen developer tools across JSON, encoding, text, crypto, color and web — all running 100% in the browser.',
+      'First public release of inbrowser.sh. Eighteen developer tools across JSON, encoding, text, crypto, color and web — all running 100% in the browser.',
     items: [
       'JSON Formatter, JSON ↔ CSV, JSON ↔ YAML',
       'Base64, URL encoder, HTML entities, JWT decoder',

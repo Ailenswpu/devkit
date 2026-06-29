@@ -79,6 +79,14 @@ const cid = tool.componentId;
       </div>
     </header>
 
+    <section class="mb-6 border-l-2 border-accent pl-4 max-w-3xl">
+      <h2 class="text-sm font-semibold uppercase text-muted">Quick answer</h2>
+      <p class="mt-2 text-sm md:text-base leading-7 text-muted">
+        <strong class="text-fg">{tool.title}</strong> runs locally in your browser for quick developer
+        formatting, conversion or inspection work. {tool.intro}
+      </p>
+    </section>
+
     <section aria-label={`${tool.title} workspace`} class="tool-shell card p-4 md:p-6">
       {cid === 'JsonFormatter' && <JsonFormatter client:load />}
       {cid === 'Base64Tool' && <Base64Tool client:load />}

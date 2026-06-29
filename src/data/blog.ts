@@ -34,9 +34,9 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
       {
-        heading: 'Where DevKit fits',
+        heading: 'Where inbrowser.sh fits',
         paragraphs: [
-          'DevKit provides a cron parser at /cron and static cron reference pages such as /cron/every-5-minutes and /cron/every-weekday-at-9am. The parser runs in the browser, uses IANA time zones for next-run previews and keeps the reference text crawlable for search engines and AI assistants.',
+          'inbrowser.sh provides a cron parser at /cron and static cron reference pages such as /cron/every-5-minutes and /cron/every-weekday-at-9am. The parser runs in the browser, uses IANA time zones for next-run previews and keeps the reference text crawlable for search engines and AI assistants.',
           'The preset pages are useful when the query is specific. Someone searching for “cron every 5 minutes” needs a direct answer, an expression, a usage example and related schedules, not a generic cron tutorial.',
         ],
         bullets: [
@@ -55,7 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     ],
     faq: [
-      { q: 'Is DevKit a drop-in replacement for Crontab.guru?', a: 'It covers common five-field crontab expressions and adds timezone-aware next-run previews, but platform-specific cron dialects should still be checked against the scheduler documentation.' },
+      { q: 'Is inbrowser.sh a drop-in replacement for Crontab.guru?', a: 'It covers common five-field crontab expressions and adds timezone-aware next-run previews, but platform-specific cron dialects should still be checked against the scheduler documentation.' },
       { q: 'Does the cron parser upload expressions?', a: 'No. The interactive parser runs in the browser. Static preset pages are rendered at build time for reference and search.' },
       { q: 'Which cron pages should I bookmark?', a: 'Bookmark /cron for testing and /cron/every-5-minutes, /cron/every-weekday-at-9am or /cron/every-hour-business-hours for common reference schedules.' },
     ],
@@ -89,9 +89,9 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
       {
-        heading: 'Using DevKit for JSON formatting',
+        heading: 'Using inbrowser.sh for JSON formatting',
         paragraphs: [
-          'DevKit’s JSON Formatter at /json-formatter runs in the browser and provides formatting, minification, validation, examples and safety guidance. Related tools such as /json-to-csv and /json-to-yaml help when the next step is conversion rather than inspection.',
+          'inbrowser.sh’s JSON Formatter at /json-formatter runs in the browser and provides formatting, minification, validation, examples and safety guidance. Related tools such as /json-to-csv and /json-to-yaml help when the next step is conversion rather than inspection.',
           'For production secrets, the best answer is still to avoid pasting them into any web page. Use local command-line tools or approved internal utilities when a value would require rotation if exposed.',
         ],
       },
@@ -131,14 +131,14 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: 'What to verify before trusting a tool',
         paragraphs: [
           'Clear privacy copy is helpful, but behavior matters more. Open the network panel, paste a harmless sample and confirm the tool does not post the input to a server. Also check whether third-party scripts are present and whether the page explains its advertising or analytics policy.',
-          'DevKit pages are static and the tool logic runs client-side. Each tool page also includes visible examples, FAQs and related links so users and crawlers can understand the tool without relying only on hydrated JavaScript.',
+          'inbrowser.sh pages are static and the tool logic runs client-side. Each tool page also includes visible examples, FAQs and related links so users and crawlers can understand the tool without relying only on hydrated JavaScript.',
         ],
       },
     ],
     faq: [
       { q: 'Are browser-side tools always safer than server-side tools?', a: 'They remove the need to upload input for simple transformations, but they do not replace internal security policy or local-only workflows for high-risk secrets.' },
       { q: 'How can I confirm a tool does not upload input?', a: 'Use the browser network panel with a harmless sample and look for POST or fetch requests that include your pasted content.' },
-      { q: 'Which DevKit tools are most privacy-sensitive?', a: 'JSON Formatter, JWT Decoder, Base64, Hash Generator, Regex Tester and Timestamp tools are common places where users paste internal snippets.' },
+      { q: 'Which inbrowser.sh tools are most privacy-sensitive?', a: 'JSON Formatter, JWT Decoder, Base64, Hash Generator, Regex Tester and Timestamp tools are common places where users paste internal snippets.' },
     ],
   },
   {
@@ -173,14 +173,14 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: 'Why static content still matters',
         paragraphs: [
           'A privacy-focused tool should not hide all explanations behind JavaScript. Static HTML lets users, search engines and AI assistants read the privacy model, examples and limitations before interacting with the tool.',
-          'That is why DevKit tool pages include crawlable descriptions, examples and FAQs in addition to the browser-side interactive panel.',
+          'That is why inbrowser.sh tool pages include crawlable descriptions, examples and FAQs in addition to the browser-side interactive panel.',
         ],
       },
     ],
     faq: [
       { q: 'Can a browser-side tool still load ads or analytics?', a: 'Yes. Browser-side processing describes where the pasted input is transformed. Users should still review page scripts, network requests and the site privacy policy.' },
       { q: 'When should I avoid web tools entirely?', a: 'Avoid web tools for production secrets, private keys, regulated data and any value that would require incident response if exposed.' },
-      { q: 'Why does DevKit emphasize static HTML?', a: 'Static HTML makes tool explanations, examples, FAQs and privacy boundaries visible to users and crawlers without requiring JavaScript execution.' },
+      { q: 'Why does inbrowser.sh emphasize static HTML?', a: 'Static HTML makes tool explanations, examples, FAQs and privacy boundaries visible to users and crawlers without requiring JavaScript execution.' },
     ],
   },
   {

@@ -32,6 +32,7 @@ export function softwareApplicationLD(tool: Tool) {
     '@type': 'SoftwareApplication',
     name: tool.h1,
     description: tool.description,
+    featureList: tool.keywords,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
     url: canonical('/' + tool.slug),
@@ -97,6 +98,27 @@ export function websiteLD() {
   };
 }
 
+export function toolsCollectionLD(tools: Tool[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${SITE_NAME} developer tools`,
+    description: SITE_TAGLINE,
+    url: canonical('/tools'),
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: tools.length,
+      itemListElement: tools.map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: tool.title,
+        description: tool.description,
+        url: canonical('/' + tool.slug),
+      })),
+    },
+  };
+}
+
 export function organizationLD() {
   return {
     '@context': 'https://schema.org',
@@ -104,6 +126,7 @@ export function organizationLD() {
     name: SITE_NAME,
     url: SITE_URL,
     email: CONTACT_EMAIL,
+    sameAs: [GITHUB_URL],
     contactPoint: {
       '@type': 'ContactPoint',
       email: CONTACT_EMAIL,

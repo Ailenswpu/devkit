@@ -90,6 +90,17 @@ const pageJsonLd = page ? [
         </div>
       </header>
 
+      <section class="mt-6 border-l-2 border-accent pl-4 max-w-3xl">
+        <h2 class="text-sm font-semibold uppercase text-muted">Direct answer</h2>
+        <p class="mt-2 text-sm md:text-base leading-7 text-muted">
+          <strong class="text-fg">{page.h1}</strong> is a browser-side workflow connected to
+          {' '}<a class="text-accent" href={`/${parentTool?.slug || 'tools'}`}>{parentTool?.title || 'inbrowser.sh tools'}</a>.
+          {conversion
+            ? <> It converts <strong class="text-fg">{conversion.inputLabel}</strong> to <strong class="text-fg">{conversion.outputLabel}</strong> without requiring an upload.</>
+            : <> It is designed for users who want a local, no-upload developer utility with static examples and FAQ content.</>}
+        </p>
+      </section>
+
       <section class="mt-8 grid gap-4 md:grid-cols-2">
         <div class="card p-4">
           <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-2">{page.inputLabel || 'Input'}</div>

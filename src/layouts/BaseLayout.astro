@@ -38,6 +38,8 @@ const commandPaletteEntries = [
     <meta name="description" content={description} />
     <link rel="canonical" href={url} />
     <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} changelog`} href={`${SITE_URL}/feed.xml`} />
+    <link rel="alternate" type="text/plain" title={`${SITE_NAME} LLM summary`} href={`${SITE_URL}/llms.txt`} />
+    <link rel="alternate" type="text/plain" title={`${SITE_NAME} full LLM reference`} href={`${SITE_URL}/llms-full.txt`} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
     {!noindex && <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />}
     {BING_SITE_VERIFICATION && <meta name="msvalidate.01" content={BING_SITE_VERIFICATION} />}

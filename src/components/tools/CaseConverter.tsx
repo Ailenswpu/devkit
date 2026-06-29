@@ -33,7 +33,7 @@ const TABS = [
 ];
 
 export default function CaseConverter() {
-  const [input, setInput] = useState('Hello World — DevKit tools');
+  const [input, setInput] = useState('Hello World — inbrowser.sh tools');
   const [mode, setMode] = useState<keyof typeof cases>('camel');
 
   const out = useMemo(() => input.split('\n').map(line => cases[mode](line)).join('\n'), [input, mode]);
