@@ -19,12 +19,21 @@ const articleLd = {
   author: { '@type': 'Organization', name: SITE_NAME },
   publisher: { '@type': 'Organization', name: SITE_NAME },
 };
+const faqLd = post.faq ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: post.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+} : null;
 ---
 <BaseLayout
   title={`${post.title} — ${SITE_NAME}`}
   description={post.description}
   path={`/blog/${post.slug}`}
-  jsonLd={articleLd}
+  jsonLd={faqLd ? [articleLd, faqLd] : articleLd}
 >
   <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
     <nav aria-label="Breadcrumb" class="text-xs text-muted mb-4">
@@ -59,6 +68,20 @@ const articleLd = {
           )}
         </section>
       ))}
+
+      {post.faq && (
+        <section>
+          <h2>FAQ</h2>
+          <div class="space-y-2">
+            {post.faq.map((item) => (
+              <details class="card p-4">
+                <summary class="cursor-pointer font-medium">{item.q}</summary>
+                <p class="mt-2 text-sm text-muted">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
 
     <footer class="mt-10 pt-6 border-t border-border">

@@ -4,6 +4,7 @@ export const prerender = true;
 import { TOOLS } from '../data/tools';
 import { TOOL_EXAMPLES } from '../data/examples';
 import { CRON_PRESETS } from '../data/cronPresets';
+import { BLOG_POSTS } from '../data/blog';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE } from '../lib/seo';
 
 export const GET: APIRoute = () => {
@@ -60,6 +61,25 @@ export const GET: APIRoute = () => {
     out.push(`Meaning: ${preset.meaning}`);
     out.push(`Example: ${preset.example}`);
     out.push(`Modification tip: ${preset.tweak}`);
+    out.push('');
+  }
+
+  out.push('## Privacy, comparison and GEO guides');
+  out.push('These pages are static HTML articles with direct answers, practical checklists and FAQ schema.');
+  out.push('');
+  for (const post of BLOG_POSTS) {
+    out.push(`### ${post.title}`);
+    out.push(`URL: ${SITE_URL}/blog/${post.slug}`);
+    out.push(`Category: ${post.category}`);
+    out.push(`Summary: ${post.description}`);
+    out.push(post.intro);
+    if (post.faq) {
+      out.push('FAQ:');
+      for (const item of post.faq) {
+        out.push(`Q: ${item.q}`);
+        out.push(`A: ${item.a}`);
+      }
+    }
     out.push('');
   }
 

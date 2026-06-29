@@ -12,11 +12,36 @@ import path from 'node:path';
 const HOST = 'inbrowser.sh';
 const KEY = 'a1b2c3d4e5f60718293a4b5c6d7e8f90'; // must match public/<KEY>.txt + src/lib/seo.ts
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
-const ENDPOINT = 'https://api.indexnow.org/IndexNow';
+const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
 function readAllUrls() {
-  const sitemap = fs.readFileSync(path.resolve('dist/sitemap-0.xml'), 'utf8');
-  return Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)).map(m => m[1]);
+  const dist = path.resolve('dist');
+  const indexPath = path.join(dist, 'sitemap-index.xml');
+  const fallbackPath = path.join(dist, 'sitemap-0.xml');
+
+  if (!fs.existsSync(indexPath) && fs.existsSync(fallbackPath)) {
+    const sitemap = fs.readFileSync(fallbackPath, 'utf8');
+    return Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)).map(m => m[1]);
+  }
+
+  if (!fs.existsSync(indexPath)) {
+    throw new Error('Missing dist/sitemap-index.xml. Run npm run build first.');
+  }
+
+  const index = fs.readFileSync(indexPath, 'utf8');
+  const sitemapUrls = Array.from(index.matchAll(/<loc>([^<]+)<\/loc>/g)).map(m => m[1]);
+  const urls = new Set();
+
+  for (const sitemapUrl of sitemapUrls) {
+    const filename = new URL(sitemapUrl).pathname.split('/').pop();
+    if (!filename) continue;
+    const sitemapPath = path.join(dist, filename);
+    if (!fs.existsSync(sitemapPath)) continue;
+    const sitemap = fs.readFileSync(sitemapPath, 'utf8');
+    for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) urls.add(match[1]);
+  }
+
+  return Array.from(urls);
 }
 
 const argv = process.argv.slice(2);

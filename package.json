@@ -13,7 +13,8 @@
     "cf:login": "wrangler login",
     "cf:whoami": "wrangler whoami",
     "cf:tail": "wrangler pages deployment tail --project-name=inbrowser",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "postdeploy:indexnow": "npm run build && npm run indexnow"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.13",

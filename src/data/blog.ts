@@ -11,9 +11,178 @@ export interface BlogPost {
     paragraphs?: string[];
     bullets?: string[];
   }[];
+  faq?: { q: string; a: string }[];
 }
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: 'crontab-guru-alternatives',
+    title: 'Crontab.guru alternatives for private cron expression testing',
+    description:
+      'Compare cron expression tools and learn when to use a browser-side parser with timezone-aware next-run previews.',
+    date: '2026-06-29',
+    category: 'Cron',
+    readingTime: '6 min read',
+    intro:
+      'Crontab.guru made cron expressions easier to read, but developers often need more than a one-line translation. A modern cron helper should explain the schedule, show next run times, make time zones explicit and keep test expressions in the browser.',
+    sections: [
+      {
+        heading: 'What to look for in a cron expression tool',
+        paragraphs: [
+          'A good cron tool answers three questions quickly: what does this expression mean, when will it run next, and which time zone is being used. Without the time zone answer, a schedule that looks correct can still fire at the wrong operational moment.',
+          'The safest default for everyday testing is a client-side parser. Cron expressions rarely contain secrets, but they can reveal deployment cadence, maintenance windows or internal workflow names when pasted together with comments.',
+        ],
+      },
+      {
+        heading: 'Where DevKit fits',
+        paragraphs: [
+          'DevKit provides a cron parser at /cron and static cron reference pages such as /cron/every-5-minutes and /cron/every-weekday-at-9am. The parser runs in the browser, uses IANA time zones for next-run previews and keeps the reference text crawlable for search engines and AI assistants.',
+          'The preset pages are useful when the query is specific. Someone searching for “cron every 5 minutes” needs a direct answer, an expression, a usage example and related schedules, not a generic cron tutorial.',
+        ],
+        bullets: [
+          'Use /cron for interactive expression testing.',
+          'Use preset pages for common schedules and quick copying.',
+          'Check the scheduler time zone before moving any expression to production.',
+          'Prefer five-field crontab syntax unless your platform explicitly requires seconds.',
+        ],
+      },
+      {
+        heading: 'When another tool may still be better',
+        paragraphs: [
+          'If your scheduler supports nonstandard syntax such as Quartz seconds, L, W, #, named calendars or platform-specific macros, confirm behavior in that platform’s own documentation. A generic five-field parser should not be treated as the final authority for every scheduler.',
+          'For production incidents, pair any online explanation with platform logs. The expression is only one part of the scheduling system; time zone settings, disabled jobs, clock drift and missed-run behavior also matter.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Is DevKit a drop-in replacement for Crontab.guru?', a: 'It covers common five-field crontab expressions and adds timezone-aware next-run previews, but platform-specific cron dialects should still be checked against the scheduler documentation.' },
+      { q: 'Does the cron parser upload expressions?', a: 'No. The interactive parser runs in the browser. Static preset pages are rendered at build time for reference and search.' },
+      { q: 'Which cron pages should I bookmark?', a: 'Bookmark /cron for testing and /cron/every-5-minutes, /cron/every-weekday-at-9am or /cron/every-hour-business-hours for common reference schedules.' },
+    ],
+  },
+  {
+    slug: 'best-private-offline-json-formatters-no-upload',
+    title: 'Best private JSON formatters for no-upload debugging',
+    description:
+      'How to choose a JSON formatter that runs locally in the browser and avoids uploading API responses.',
+    date: '2026-06-29',
+    category: 'JSON',
+    readingTime: '6 min read',
+    intro:
+      'A private JSON formatter should make API data readable without sending that data to a server. For many debugging tasks, formatting, minifying and validating JSON can happen entirely in the browser.',
+    sections: [
+      {
+        heading: 'Why no-upload JSON formatting matters',
+        paragraphs: [
+          'API responses often contain customer IDs, emails, internal object names, feature flags, staging URLs or partial tokens. Even when the data is not a password, it may still be inappropriate to send it to a third-party backend for formatting.',
+          'A no-upload formatter reduces that risk by keeping parsing and pretty-printing on the user device. The user can also inspect the browser network panel and confirm that pasted JSON is not posted to an API endpoint.',
+        ],
+      },
+      {
+        heading: 'A practical checklist',
+        bullets: [
+          'The tool should say clearly whether processing is client-side.',
+          'It should validate strict JSON and show useful syntax errors.',
+          'It should support both beautify and minify workflows.',
+          'It should avoid account requirements, paste history and unnecessary uploads.',
+          'It should provide examples and FAQs that are visible without JavaScript.',
+        ],
+      },
+      {
+        heading: 'Using DevKit for JSON formatting',
+        paragraphs: [
+          'DevKit’s JSON Formatter at /json-formatter runs in the browser and provides formatting, minification, validation, examples and safety guidance. Related tools such as /json-to-csv and /json-to-yaml help when the next step is conversion rather than inspection.',
+          'For production secrets, the best answer is still to avoid pasting them into any web page. Use local command-line tools or approved internal utilities when a value would require rotation if exposed.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Can an online JSON formatter work offline?', a: 'A static browser-side formatter can continue to work after assets are cached, but true offline guarantees require a service worker or local tool.' },
+      { q: 'Does no-upload mean no risk?', a: 'No. It lowers the upload risk, but users should still avoid pasting production secrets or regulated data into unapproved pages.' },
+      { q: 'What should I use for very large JSON files?', a: 'For huge files, use local tools such as jq or an editor that can handle large documents without freezing the browser.' },
+    ],
+  },
+  {
+    slug: 'developer-tools-that-dont-upload-your-data',
+    title: 'Developer tools that do not upload your data',
+    description:
+      'A guide to choosing browser-side developer utilities for JSON, JWT, Base64, hashes, regex and timestamps.',
+    date: '2026-06-29',
+    category: 'Privacy',
+    readingTime: '5 min read',
+    intro:
+      'The most useful developer utilities are often the smallest: format JSON, decode Base64, inspect a JWT, test a regex, generate a hash or convert a timestamp. Many of those tasks do not require a backend at all.',
+    sections: [
+      {
+        heading: 'Which tools can run fully in the browser',
+        paragraphs: [
+          'Text transformations, encoders, decoders, formatters, hash generators, timestamp converters and many preview tools can run locally with standard browser APIs and small JavaScript libraries. That means input can stay on the device while the page provides a fast interface.',
+          'This model is especially useful for debugging snippets that are not secret enough for a vault but still should not be copied into logs or unknown servers.',
+        ],
+        bullets: [
+          'JSON formatting and conversion can use local parsers.',
+          'Base64, URL encoding and HTML entity conversion can use browser APIs.',
+          'JWT decoding can read header and payload locally without verifying signatures.',
+          'SHA hashes can use the Web Crypto API.',
+          'Timestamp and cron tools can calculate results in the browser.',
+        ],
+      },
+      {
+        heading: 'What to verify before trusting a tool',
+        paragraphs: [
+          'Clear privacy copy is helpful, but behavior matters more. Open the network panel, paste a harmless sample and confirm the tool does not post the input to a server. Also check whether third-party scripts are present and whether the page explains its advertising or analytics policy.',
+          'DevKit pages are static and the tool logic runs client-side. Each tool page also includes visible examples, FAQs and related links so users and crawlers can understand the tool without relying only on hydrated JavaScript.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Are browser-side tools always safer than server-side tools?', a: 'They remove the need to upload input for simple transformations, but they do not replace internal security policy or local-only workflows for high-risk secrets.' },
+      { q: 'How can I confirm a tool does not upload input?', a: 'Use the browser network panel with a harmless sample and look for POST or fetch requests that include your pasted content.' },
+      { q: 'Which DevKit tools are most privacy-sensitive?', a: 'JSON Formatter, JWT Decoder, Base64, Hash Generator, Regex Tester and Timestamp tools are common places where users paste internal snippets.' },
+    ],
+  },
+  {
+    slug: 'online-vs-local-developer-tools-data-flow',
+    title: 'Online vs local developer tools: where does pasted data go?',
+    description:
+      'Understand the data-flow difference between upload-based utilities, browser-side tools and local command-line workflows.',
+    date: '2026-06-29',
+    category: 'Privacy',
+    readingTime: '6 min read',
+    intro:
+      '“Online tool” can mean very different things. Some tools upload input to a backend, some run entirely in the browser after the page loads, and some are installed locally. The data-flow difference matters more than the label.',
+    sections: [
+      {
+        heading: 'Three common data-flow models',
+        paragraphs: [
+          'An upload-based web utility sends input to a server for processing. That can be necessary for heavy jobs, account-backed workflows or file conversion, but it also creates logging and retention questions.',
+          'A browser-side utility downloads code and processes input on the device. The page is online, but the pasted data does not need to leave the browser for simple transformations. A local CLI or desktop app keeps both code execution and data on the machine, assuming the tool itself is trusted.',
+        ],
+      },
+      {
+        heading: 'How to decide which model to use',
+        bullets: [
+          'Use local CLI tools for credentials, private keys, regulated records and incident-sensitive data.',
+          'Use browser-side tools for low-risk formatting, conversion, previewing and one-off debugging.',
+          'Use upload-based services only when the task truly needs server resources or collaboration.',
+          'Check network activity when a web tool claims to be client-side.',
+          'Rotate secrets if they were pasted into an untrusted or upload-based workflow.',
+        ],
+      },
+      {
+        heading: 'Why static content still matters',
+        paragraphs: [
+          'A privacy-focused tool should not hide all explanations behind JavaScript. Static HTML lets users, search engines and AI assistants read the privacy model, examples and limitations before interacting with the tool.',
+          'That is why DevKit tool pages include crawlable descriptions, examples and FAQs in addition to the browser-side interactive panel.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Can a browser-side tool still load ads or analytics?', a: 'Yes. Browser-side processing describes where the pasted input is transformed. Users should still review page scripts, network requests and the site privacy policy.' },
+      { q: 'When should I avoid web tools entirely?', a: 'Avoid web tools for production secrets, private keys, regulated data and any value that would require incident response if exposed.' },
+      { q: 'Why does DevKit emphasize static HTML?', a: 'Static HTML makes tool explanations, examples, FAQs and privacy boundaries visible to users and crawlers without requiring JavaScript execution.' },
+    ],
+  },
   {
     slug: 'why-client-side-developer-tools-are-safer',
     title: 'Why client-side developer tools are safer for everyday debugging',

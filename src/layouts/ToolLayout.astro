@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { type Tool, relatedTools } from '../data/tools';
 import { TOOL_EXAMPLES } from '../data/examples';
+import { CRON_PRESETS } from '../data/cronPresets';
 import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD, howToLD } from '../lib/seo';
 
 import JsonFormatter from '../components/tools/JsonFormatter';
@@ -157,6 +158,24 @@ const cid = tool.componentId;
             </details>
           ))}
         </div>
+
+        {tool.slug === 'cron' && (
+          <>
+            <h2>Popular cron presets</h2>
+            <p>
+              Use these static cron reference pages for common schedules. Each page includes the expression,
+              a plain-English meaning, a practical example, modification tips and related schedules.
+            </p>
+            <ul class="columns-1 sm:columns-2 gap-8">
+              {CRON_PRESETS.map(preset => (
+                <li class="break-inside-avoid">
+                  <a class="text-accent" href={`/cron/${preset.slug}`}>{preset.title}</a>
+                  <span> — <code>{preset.expression}</code></span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </article>
 
       <aside class="space-y-4">
