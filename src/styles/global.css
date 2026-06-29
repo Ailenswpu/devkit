@@ -34,20 +34,63 @@ body { font-family: theme('fontFamily.sans'); -webkit-font-smoothing: antialiase
 
 a { color: inherit; }
 
-.tool-shell input,
+.tool-shell input:not([type="checkbox"]):not([type="radio"]),
 .tool-shell textarea,
 .tool-shell select {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background: rgb(var(--bg));
   color: rgb(var(--fg));
   border: 1px solid rgb(var(--border));
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   font-family: theme('fontFamily.mono');
+  font-size: 13px;
+  line-height: 1.55;
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  color-scheme: light;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .03);
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
-.tool-shell textarea { resize: vertical; min-height: 320px; font-size: 13px; line-height: 1.55; }
-.tool-shell input:focus,
+:root.dark .tool-shell input:not([type="checkbox"]):not([type="radio"]),
+:root.dark .tool-shell textarea,
+:root.dark .tool-shell select {
+  color-scheme: dark;
+}
+.tool-shell input:not([type="checkbox"]):not([type="radio"]),
+.tool-shell select {
+  min-height: 42px;
+}
+.tool-shell textarea {
+  resize: vertical;
+  min-height: clamp(220px, 34vh, 360px);
+  tab-size: 2;
+}
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):hover,
+.tool-shell textarea:hover,
+.tool-shell select:hover {
+  border-color: rgb(var(--muted) / .65);
+}
+.tool-shell input::placeholder,
+.tool-shell textarea::placeholder {
+  color: rgb(var(--muted) / .7);
+}
+.tool-shell input[readonly],
+.tool-shell textarea[readonly] {
+  background: rgb(var(--bg) / .72);
+}
+.tool-shell input[type="checkbox"],
+.tool-shell input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 auto;
+  accent-color: rgb(var(--accent));
+}
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):focus,
 .tool-shell textarea:focus,
 .tool-shell select:focus {
   border-color: rgb(var(--accent));
