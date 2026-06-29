@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 export const prerender = true;
 import { TOOLS } from '../data/tools';
 import { TOOL_EXAMPLES } from '../data/examples';
+import { CRON_PRESETS } from '../data/cronPresets';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE } from '../lib/seo';
 
 export const GET: APIRoute = () => {
@@ -46,6 +47,19 @@ export const GET: APIRoute = () => {
     }
     out.push('');
     out.push('---');
+    out.push('');
+  }
+
+  out.push('## Cron preset pages');
+  out.push('Each cron preset page is static HTML with an expression, plain-English meaning, example use and related schedules.');
+  out.push('');
+  for (const preset of CRON_PRESETS) {
+    out.push(`### ${preset.title}`);
+    out.push(`URL: ${SITE_URL}/cron/${preset.slug}`);
+    out.push(`Expression: ${preset.expression}`);
+    out.push(`Meaning: ${preset.meaning}`);
+    out.push(`Example: ${preset.example}`);
+    out.push(`Modification tip: ${preset.tweak}`);
     out.push('');
   }
 

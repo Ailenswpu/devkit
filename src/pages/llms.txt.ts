@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 
 export const prerender = true;
 import { TOOLS, CATEGORIES } from '../data/tools';
+import { CRON_PRESETS } from '../data/cronPresets';
 import { SITE_URL, SITE_TAGLINE } from '../lib/seo';
 
 export const GET: APIRoute = () => {
@@ -24,5 +25,10 @@ export const GET: APIRoute = () => {
     }
     lines.push('');
   }
+  lines.push('## Cron schedule quick reference');
+  for (const preset of CRON_PRESETS) {
+    lines.push(`- ${preset.title}: ${SITE_URL}/cron/${preset.slug} — ${preset.expression} means ${preset.meaning}`);
+  }
+  lines.push('');
   return new Response(lines.join('\n'), { headers: { 'content-type': 'text/plain; charset=utf-8' } });
 };

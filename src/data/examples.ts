@@ -84,4 +84,54 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
     output: '<h1>Hello</h1><p><strong>bold</strong> and <code>code</code></p>',
     note: 'Rendered HTML is sanitized with DOMPurify before display.',
   },
+  'timestamp': {
+    input: '1719792000 seconds',
+    output: 'UTC: Mon, 01 Jul 2024 00:00:00 GMT | ISO: 2024-07-01T00:00:00.000Z',
+    note: 'Seconds and milliseconds are both supported.',
+  },
+  'timestamp-now': {
+    input: 'Open the page',
+    output: 'Live Unix seconds, milliseconds, ISO 8601, RFC 2822 and local time.',
+  },
+  'cron': {
+    input: '*/5 * * * *',
+    output: 'Runs every 5 minutes; next run times are calculated in the browser.',
+  },
+  'timezone-converter': {
+    input: '2026-06-29 09:00 UTC',
+    output: 'Shows equivalent times in New York, London, Tokyo, Shanghai and other common zones.',
+  },
+  'date-diff': {
+    input: '2026-06-01 to 2026-06-29',
+    output: '28 calendar days, with weekday/weekend counts.',
+  },
+  'date-calculator': {
+    input: '2026-06-29 + 14 days',
+    output: '2026-07-13, with optional weekend skipping for day calculations.',
+  },
+  'countdown': {
+    input: 'Target: 2026-12-31 23:59',
+    output: 'Remaining days, hours, minutes and seconds.',
+  },
+  'iso-8601': {
+    input: '2026-06-29T12:00:00Z',
+    output: 'UTC, local, Unix seconds, Unix milliseconds and RFC-style output.',
+  },
+  'discord-timestamp': {
+    input: '2026-06-29 12:00, style R',
+    output: '<t:1782734400:R>',
+    note: 'Discord renders the tag in each viewer’s local time zone.',
+  },
+  'duration-converter': {
+    input: '90 minutes',
+    output: '5400 seconds | 1.5 hours | 0.0625 days.',
+  },
+  'week-number': {
+    input: '2026-06-29',
+    output: 'ISO week number, ISO weekday and day-of-year.',
+  },
+  'age-calculator': {
+    input: '1990-01-01',
+    output: 'Elapsed years plus days until the next anniversary.',
+  },
 };

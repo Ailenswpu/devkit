@@ -16,6 +16,8 @@ const description = 'A growing set of fast, private developer tools — JSON, Ba
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         <a href="/json-formatter" class="btn btn-primary">Try JSON Formatter</a>
+        <a href="/timestamp-now" class="btn">Current timestamp</a>
+        <a href="/cron" class="btn">Cron parser</a>
         <button id="open-cmdk" class="btn" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           Search tools
@@ -27,6 +29,37 @@ const description = 'A growing set of fast, private developer tools — JSON, Ba
 
   <section class="max-w-6xl mx-auto px-4 pb-16">
     <ToolGrid />
+  </section>
+
+  <section class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-14 grid gap-8 md:grid-cols-[1.1fr_1.9fr]">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight">Time, timestamp and cron tools</h2>
+        <p class="mt-3 text-muted leading-7">
+          DevKit includes browser-side utilities for Unix epoch conversion, current timestamps, cron expression
+          explanation, time zone conversion, date differences, countdowns, ISO 8601 validation and Discord
+          timestamp tags.
+        </p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a class="card p-4 block hover:border-accent/60" href="/timestamp">
+          <h3 class="font-semibold">Unix timestamp converter</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Convert seconds or milliseconds since 1970-01-01T00:00:00Z into UTC, local time and ISO 8601.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/cron">
+          <h3 class="font-semibold">Cron expression parser</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Explain five-field cron syntax and calculate the next five runs in a selected IANA time zone.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/timezone-converter">
+          <h3 class="font-semibold">Time zone converter</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Interpret a source wall-clock time in one zone and compare UTC, New York, London, Tokyo and more.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/cron/every-5-minutes">
+          <h3 class="font-semibold">Cron preset pages</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Static reference pages answer searches like what does */5 * * * * mean with examples and related schedules.</p>
+        </a>
+      </div>
+    </div>
   </section>
 
   <section class="border-t border-border">

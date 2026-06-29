@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CRON_PRESETS, CRON_PRESETS_BY_SLUG } from '../../data/cronPresets';
+import { SITE_NAME, canonical } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return CRON_PRESETS.map((preset) => ({ params: { preset: preset.slug }, props: { preset } }));
+}
+
+const { preset } = Astro.props;
+const related = preset.related.map((slug: string) => CRON_PRESETS_BY_SLUG.get(slug)).filter(Boolean);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: `What does ${preset.expression} mean?`,
+      acceptedAnswer: { '@type': 'Answer', text: preset.meaning },
+    },
+    {
+      '@type': 'Question',
+      name: 'Which time zone does this cron expression use?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Cron expressions run in the time zone configured by the scheduler. Always check your server, platform or workflow time zone.' },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${preset.title} — ${preset.expression} | ${SITE_NAME}`}
+  description={`${preset.title}: ${preset.expression}. ${preset.meaning} Includes explanation, example and related cron schedules.`}
+  path={`/cron/${preset.slug}`}
+  jsonLd={jsonLd}
+>
+  <article class="max-w-3xl mx-auto px-4 pt-10 pb-16 prose-tool">
+    <nav aria-label="Breadcrumb" class="text-xs text-muted mb-4">
+      <a class="hover:text-fg" href="/">Home</a>
+      <span aria-hidden="true"> / </span>
+      <a class="hover:text-fg" href="/cron">Cron Parser</a>
+      <span aria-hidden="true"> / </span>
+      <span class="text-fg">{preset.expression}</span>
+    </nav>
+
+    <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">{preset.title}</h1>
+    <p class="mt-3 text-lg text-muted">Expression: <code>{preset.expression}</code></p>
+
+    <h2>Meaning</h2>
+    <p>{preset.meaning}</p>
+
+    <h2>Example use</h2>
+    <p>{preset.example}</p>
+
+    <h2>How to modify it</h2>
+    <p>{preset.tweak}</p>
+
+    <h2>Use it in the cron parser</h2>
+    <p>
+      Open the <a class="text-accent" href="/cron">Cron Parser</a>, paste <code>{preset.expression}</code>,
+      and review the next run times in your browser before using the schedule in production.
+    </p>
+
+    {related.length > 0 && (
+      <>
+        <h2>Related cron schedules</h2>
+        <ul>
+          {related.map((item: any) => (
+            <li><a class="text-accent" href={`/cron/${item.slug}`}>{item.title}</a> — <code>{item.expression}</code></li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <h2>FAQ</h2>
+    <h3>Does cron use my local time zone?</h3>
+    <p>Cron uses the time zone configured in the scheduler or server. Cloud platforms, CI systems and containers may default to UTC.</p>
+    <h3>Is this a five-field or six-field cron?</h3>
+    <p>This page uses standard five-field crontab syntax: minute, hour, day of month, month and day of week.</p>
+  </article>
+</BaseLayout>

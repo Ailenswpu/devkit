@@ -22,6 +22,20 @@ import LoremIpsum from '../components/tools/LoremIpsum';
 import MarkdownPreview from '../components/tools/MarkdownPreview';
 import JsonToCsv from '../components/tools/JsonToCsv';
 import JsonToYaml from '../components/tools/JsonToYaml';
+import {
+  AgeCalculator,
+  CountdownTool,
+  CronTool,
+  DateCalculator,
+  DateDiff,
+  DiscordTimestamp,
+  DurationConverter,
+  Iso8601Tool,
+  TimestampNow,
+  TimestampTool,
+  TimezoneConverter,
+  WeekNumber,
+} from '../components/tools/TimeTools';
 
 export interface Props {
   tool: Tool;
@@ -83,6 +97,18 @@ const cid = tool.componentId;
       {cid === 'MarkdownPreview' && <MarkdownPreview client:only="preact" />}
       {cid === 'JsonToCsv' && <JsonToCsv client:load />}
       {cid === 'JsonToYaml' && <JsonToYaml client:load />}
+      {cid === 'TimestampTool' && <TimestampTool client:load />}
+      {cid === 'TimestampNow' && <TimestampNow client:load />}
+      {cid === 'CronTool' && <CronTool client:load />}
+      {cid === 'TimezoneConverter' && <TimezoneConverter client:load />}
+      {cid === 'DateDiff' && <DateDiff client:load />}
+      {cid === 'DateCalculator' && <DateCalculator client:load />}
+      {cid === 'CountdownTool' && <CountdownTool client:load />}
+      {cid === 'Iso8601Tool' && <Iso8601Tool client:load />}
+      {cid === 'DiscordTimestamp' && <DiscordTimestamp client:load />}
+      {cid === 'DurationConverter' && <DurationConverter client:load />}
+      {cid === 'WeekNumber' && <WeekNumber client:load />}
+      {cid === 'AgeCalculator' && <AgeCalculator client:load />}
     </section>
 
     <section class="mt-10 grid gap-8 md:grid-cols-3">

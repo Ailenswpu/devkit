@@ -21,6 +21,8 @@
     "@astrojs/tailwind": "^5.1.5",
     "astro": "^4.16.18",
     "colord": "^2.9.3",
+    "cron-parser": "^5.6.1",
+    "cronstrue": "^3.21.0",
     "diff": "^7.0.0",
     "dompurify": "^3.2.7",
     "fast-xml-parser": "^4.5.3",

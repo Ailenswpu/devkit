@@ -5,7 +5,8 @@ export type ToolCategory =
   | 'Crypto'
   | 'Generators'
   | 'Color'
-  | 'Web';
+  | 'Web'
+  | 'Time';
 
 export interface Tool {
   slug: string;
@@ -37,7 +38,19 @@ export interface Tool {
     | 'LoremIpsum'
     | 'MarkdownPreview'
     | 'JsonToCsv'
-    | 'JsonToYaml';
+    | 'JsonToYaml'
+    | 'TimestampTool'
+    | 'TimestampNow'
+    | 'CronTool'
+    | 'TimezoneConverter'
+    | 'DateDiff'
+    | 'DateCalculator'
+    | 'CountdownTool'
+    | 'Iso8601Tool'
+    | 'DiscordTimestamp'
+    | 'DurationConverter'
+    | 'WeekNumber'
+    | 'AgeCalculator';
 }
 
 export const CATEGORIES: { id: ToolCategory; label: string; blurb: string }[] = [
@@ -48,6 +61,7 @@ export const CATEGORIES: { id: ToolCategory; label: string; blurb: string }[] = 
   { id: 'Generators', label: 'Generators', blurb: 'UUIDs, lorem, QR codes and more.' },
   { id: 'Color',      label: 'Color',      blurb: 'Convert and inspect color values.' },
   { id: 'Web',        label: 'Web',        blurb: 'Markdown, regex and other web helpers.' },
+  { id: 'Time',       label: 'Time',       blurb: 'Timestamps, cron, time zones and date math.' },
 ];
 
 export const TOOLS: Tool[] = [
@@ -438,6 +452,264 @@ export const TOOLS: Tool[] = [
       { q: 'Does it support tables and code blocks?', a: 'Yes. GFM is enabled.' },
     ],
     componentId: 'MarkdownPreview',
+  },
+  {
+    slug: 'timestamp',
+    title: 'Timestamp Converter',
+    h1: 'Unix Timestamp Converter',
+    subtitle: 'Convert Unix timestamps to human dates and back with local and UTC output.',
+    description: 'Free Unix timestamp converter for seconds and milliseconds. Convert epoch time to UTC/local dates and parse dates back to timestamps.',
+    category: 'Time',
+    keywords: ['unix timestamp converter', 'epoch time', 'timestamp to date', 'date to timestamp'],
+    related: ['timestamp-now', 'iso-8601', 'timezone-converter'],
+    intro: 'Unix timestamp conversion maps a number of elapsed seconds or milliseconds since 1970-01-01T00:00:00Z to a human-readable date. It is useful when debugging APIs, logs, databases and scheduled jobs.',
+    howto: [
+      'Paste a timestamp or type a date/time.',
+      'Choose seconds or milliseconds when converting from epoch time.',
+      'Compare UTC and local output before copying the result.',
+    ],
+    faq: [
+      { q: 'What is Unix epoch time?', a: 'Unix epoch time counts elapsed time since 1970-01-01 00:00:00 UTC.' },
+      { q: 'How do I know if a timestamp is seconds or milliseconds?', a: 'Current second timestamps are 10 digits; millisecond timestamps are usually 13 digits.' },
+      { q: 'Does this upload my timestamp?', a: 'No. Parsing and formatting run entirely in your browser.' },
+    ],
+    componentId: 'TimestampTool',
+  },
+  {
+    slug: 'timestamp-now',
+    title: 'Timestamp Now',
+    h1: 'Current Timestamp',
+    subtitle: 'See the current Unix time in seconds, milliseconds, ISO and RFC formats.',
+    description: 'Current Unix timestamp tool with live seconds, milliseconds, ISO 8601 and RFC 2822 output. Copy any format instantly.',
+    category: 'Time',
+    keywords: ['current timestamp', 'unix timestamp now', 'epoch now', 'current epoch time'],
+    related: ['timestamp', 'iso-8601', 'discord-timestamp'],
+    intro: 'Timestamp Now shows the current moment in the formats developers copy most often: Unix seconds, Unix milliseconds, ISO 8601, RFC 2822 and local time.',
+    howto: [
+      'Open the page and watch the timestamp update once per second.',
+      'Use the copy button next to the format you need.',
+      'Use Timestamp Converter for a fixed date or historical value.',
+    ],
+    faq: [
+      { q: 'Why are seconds and milliseconds different lengths?', a: 'Seconds count whole seconds since epoch; milliseconds count thousandths of a second, so the number is longer.' },
+      { q: 'Is the clock server-synced?', a: 'No. It uses your browser and device clock.' },
+      { q: 'Which timestamp should I use for APIs?', a: 'Check the API docs. Many APIs use seconds; JavaScript Date uses milliseconds.' },
+    ],
+    componentId: 'TimestampNow',
+  },
+  {
+    slug: 'cron',
+    title: 'Cron Parser',
+    h1: 'Cron Expression Parser',
+    subtitle: 'Explain cron expressions and estimate the next run times in your browser.',
+    description: 'Free cron expression parser and explainer. Understand schedules like */5 * * * * and preview upcoming run times locally.',
+    category: 'Time',
+    keywords: ['cron parser', 'cron expression', 'crontab guru', 'cron next run'],
+    related: ['timestamp', 'timezone-converter', 'date-calculator'],
+    intro: 'Cron Parser explains five-field cron expressions and calculates upcoming matching times. Use it to sanity-check scheduled jobs before shipping them.',
+    howto: [
+      'Paste a five-field cron expression such as */15 * * * *.',
+      'Choose the IANA time zone your scheduler uses.',
+      'Read the plain-English explanation and review the next run times.',
+    ],
+    faq: [
+      { q: 'Which cron format is supported?', a: 'This release supports common five-field crontab expressions: minute, hour, day of month, month and day of week.' },
+      { q: 'Does it support seconds?', a: 'No. Six-field cron with seconds is intentionally excluded to keep results clear.' },
+      { q: 'How are time zones handled?', a: 'The interactive preview lets you choose an IANA time zone such as UTC, America/New_York or Asia/Tokyo, then calculates upcoming runs for that zone.' },
+    ],
+    componentId: 'CronTool',
+  },
+  {
+    slug: 'timezone-converter',
+    title: 'Time Zone Converter',
+    h1: 'Time Zone Converter',
+    subtitle: 'Convert meeting times between UTC, New York, London, Tokyo and more.',
+    description: 'Free time zone converter using IANA time zones. Convert a date and time across common cities with DST-aware browser Intl output.',
+    category: 'Time',
+    keywords: ['timezone converter', 'time zone meeting planner', 'utc to local time', 'convert time zones'],
+    related: ['timestamp', 'date-diff', 'timestamp-now'],
+    intro: 'Time Zone Converter turns one meeting time into multiple IANA time zones using the browser Intl API. It is useful for remote teams, release windows and support handoffs.',
+    howto: [
+      'Pick a source date, time and time zone.',
+      'Choose target zones from the common city list.',
+      'Copy the converted times with zone labels.',
+    ],
+    faq: [
+      { q: 'Does it account for daylight saving time?', a: 'Yes. Formatting uses IANA time zones through the browser Intl API.' },
+      { q: 'Why use IANA names?', a: 'Names like America/New_York are less ambiguous than abbreviations like EST or CST.' },
+      { q: 'Can I convert UTC?', a: 'Yes. UTC is included as a first-class zone.' },
+    ],
+    componentId: 'TimezoneConverter',
+  },
+  {
+    slug: 'date-diff',
+    title: 'Date Difference',
+    h1: 'Date Difference Calculator',
+    subtitle: 'Calculate days, hours, minutes, weekends and rough business days between dates.',
+    description: 'Free date difference calculator. Compare two dates and get days, hours, minutes, weekends and weekday counts locally.',
+    category: 'Time',
+    keywords: ['date diff', 'days between dates', 'business days calculator', 'date difference calculator'],
+    related: ['date-calculator', 'age-calculator', 'countdown'],
+    intro: 'Date Difference calculates the interval between two dates in days, hours and minutes, with simple weekday and weekend counts for planning.',
+    howto: [
+      'Enter the start date and end date.',
+      'Read the total duration and calendar-day difference.',
+      'Use the weekday count as a rough business-day estimate.',
+    ],
+    faq: [
+      { q: 'Are holidays excluded?', a: 'No. Weekday counts exclude Saturdays and Sundays only.' },
+      { q: 'Is the end date included?', a: 'The duration is measured from the start instant to the end instant.' },
+      { q: 'Does it run locally?', a: 'Yes. Date math runs in your browser.' },
+    ],
+    componentId: 'DateDiff',
+  },
+  {
+    slug: 'date-calculator',
+    title: 'Date Calculator',
+    h1: 'Date Calculator',
+    subtitle: 'Add or subtract days, weeks, months and years from a starting date.',
+    description: 'Free date calculator. Add or subtract days, weeks, months and years, with an option to skip weekends.',
+    category: 'Time',
+    keywords: ['date calculator', 'add days to date', 'subtract days from date', 'business date calculator'],
+    related: ['date-diff', 'week-number', 'countdown'],
+    intro: 'Date Calculator answers practical planning questions such as “what date is 45 days from now?” or “what is 10 weekdays after this release date?”.',
+    howto: [
+      'Choose a starting date.',
+      'Enter an amount and a unit.',
+      'Toggle skip weekends when you need a weekday-only estimate.',
+    ],
+    faq: [
+      { q: 'How are months handled?', a: 'Month addition uses JavaScript Date behavior and clamps through the calendar naturally.' },
+      { q: 'Does skip weekends exclude holidays?', a: 'No. It skips Saturdays and Sundays only.' },
+      { q: 'Can I subtract time?', a: 'Yes. Choose Subtract instead of Add.' },
+    ],
+    componentId: 'DateCalculator',
+  },
+  {
+    slug: 'countdown',
+    title: 'Countdown',
+    h1: 'Countdown Timer',
+    subtitle: 'See how long remains until a date and time in days, hours, minutes and seconds.',
+    description: 'Free countdown timer for any date and time. Shows days, hours, minutes and seconds remaining in your browser.',
+    category: 'Time',
+    keywords: ['countdown timer', 'time until date', 'days until', 'countdown calculator'],
+    related: ['date-diff', 'timestamp', 'date-calculator'],
+    intro: 'Countdown shows the remaining time until a target date using your browser clock. It is useful for release windows, launches, exams and event planning.',
+    howto: [
+      'Enter the target date and time.',
+      'Watch the remaining days, hours, minutes and seconds update.',
+      'Copy the target time in ISO format if needed.',
+    ],
+    faq: [
+      { q: 'Does the countdown keep running in the background?', a: 'Browsers may throttle timers in background tabs, but the displayed value catches up when the tab becomes active.' },
+      { q: 'Which time zone is used?', a: 'The date-time input uses your browser local time zone.' },
+    ],
+    componentId: 'CountdownTool',
+  },
+  {
+    slug: 'iso-8601',
+    title: 'ISO 8601 Converter',
+    h1: 'ISO 8601 Date Converter',
+    subtitle: 'Validate and convert ISO 8601, local time, UTC and RFC 2822 strings.',
+    description: 'Free ISO 8601 date converter and validator. Convert ISO strings to UTC, local time, Unix seconds and RFC 2822.',
+    category: 'Time',
+    keywords: ['iso 8601 converter', 'iso date validator', 'rfc 2822 date', 'date format converter'],
+    related: ['timestamp', 'timestamp-now', 'timezone-converter'],
+    intro: 'ISO 8601 is the safest date format for APIs because it can include a precise time zone offset. This converter validates date strings and shows common alternatives.',
+    howto: [
+      'Paste an ISO 8601 or RFC 2822 date string.',
+      'Check the parsed UTC and local outputs.',
+      'Copy Unix seconds, milliseconds or normalized ISO output.',
+    ],
+    faq: [
+      { q: 'What does Z mean in an ISO date?', a: 'Z means UTC, also known as zero offset.' },
+      { q: 'Why is my local time different from UTC?', a: 'Local time applies your browser time zone offset to the same instant.' },
+    ],
+    componentId: 'Iso8601Tool',
+  },
+  {
+    slug: 'discord-timestamp',
+    title: 'Discord Timestamp',
+    h1: 'Discord Timestamp Generator',
+    subtitle: 'Generate Discord <t:...> timestamp tags for relative and localized times.',
+    description: 'Free Discord timestamp generator. Create <t:unix:R>, short date, long date and time tags from a local date.',
+    category: 'Time',
+    keywords: ['discord timestamp', 'discord timestamp generator', 'discord time format'],
+    related: ['timestamp', 'timestamp-now', 'countdown'],
+    intro: 'Discord timestamp tags render dates in each viewer’s local time zone. Generate the tag once and Discord handles localization for everyone in the channel.',
+    howto: [
+      'Pick a local date and time.',
+      'Choose the Discord display style.',
+      'Copy the generated <t:...> tag into Discord.',
+    ],
+    faq: [
+      { q: 'Why use Discord timestamp tags?', a: 'They avoid time zone confusion because Discord renders the time locally for each user.' },
+      { q: 'What does R mean?', a: 'R is the relative format, such as “in 2 hours” or “3 days ago”.' },
+    ],
+    componentId: 'DiscordTimestamp',
+  },
+  {
+    slug: 'duration-converter',
+    title: 'Duration Converter',
+    h1: 'Duration Converter',
+    subtitle: 'Convert seconds, minutes, hours, days and weeks with human-readable output.',
+    description: 'Free duration converter. Convert seconds to minutes, hours, days and weeks, or start from any unit.',
+    category: 'Time',
+    keywords: ['duration converter', 'seconds to hours', 'minutes to days', 'time duration calculator'],
+    related: ['date-diff', 'countdown', 'timestamp'],
+    intro: 'Duration Converter turns a numeric time span into seconds, minutes, hours, days and weeks. It is helpful for logs, timeouts, cache TTLs and monitoring windows.',
+    howto: [
+      'Enter a value and choose the source unit.',
+      'Read equivalent durations in other units.',
+      'Copy the human-readable summary.',
+    ],
+    faq: [
+      { q: 'Does a month have a fixed duration?', a: 'No. This converter intentionally uses fixed units up to weeks and avoids months.' },
+      { q: 'Can I use decimals?', a: 'Yes. Decimal values are accepted.' },
+    ],
+    componentId: 'DurationConverter',
+  },
+  {
+    slug: 'week-number',
+    title: 'Week Number',
+    h1: 'ISO Week Number Calculator',
+    subtitle: 'Find the ISO week number, weekday and day-of-year for any date.',
+    description: 'Free ISO week number calculator. Get ISO week, ISO week-year, weekday and day-of-year for any date.',
+    category: 'Time',
+    keywords: ['week number', 'iso week', 'day of year', 'week of year calculator'],
+    related: ['date-calculator', 'date-diff', 'timestamp'],
+    intro: 'ISO week numbers are used in planning, reporting and logistics. This calculator shows the ISO week-year, week number, weekday and day of year.',
+    howto: [
+      'Choose a date.',
+      'Read the ISO week number and ISO week-year.',
+      'Use day-of-year for logs, reports and ordinal date references.',
+    ],
+    faq: [
+      { q: 'Why can ISO week-year differ from calendar year?', a: 'Early January dates can belong to the last ISO week of the previous year, and late December dates can belong to week 1 of the next ISO year.' },
+      { q: 'Which day starts the ISO week?', a: 'Monday is ISO weekday 1.' },
+    ],
+    componentId: 'WeekNumber',
+  },
+  {
+    slug: 'age-calculator',
+    title: 'Age Calculator',
+    h1: 'Age Calculator',
+    subtitle: 'Calculate exact age and next birthday countdown from a birth date.',
+    description: 'Free age calculator. Calculate years, months and days since a birth date plus days until the next birthday.',
+    category: 'Time',
+    keywords: ['age calculator', 'birthday calculator', 'calculate age', 'days until birthday'],
+    related: ['date-diff', 'date-calculator', 'week-number'],
+    intro: 'Age Calculator computes elapsed years, months and days from a birth date and shows how long remains until the next birthday or anniversary.',
+    howto: [
+      'Enter a birth date or anniversary date.',
+      'Read the exact elapsed years, months and days.',
+      'Check the next anniversary date and days remaining.',
+    ],
+    faq: [
+      { q: 'How are leap years handled?', a: 'The browser calendar handles leap years when adding years and comparing dates.' },
+      { q: 'Can I use it for anniversaries?', a: 'Yes. Any start date works, not only birthdays.' },
+    ],
+    componentId: 'AgeCalculator',
   },
 ];
 

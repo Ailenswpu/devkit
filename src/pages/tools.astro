@@ -14,4 +14,21 @@ import { TOOLS } from '../data/tools';
     <p class="mt-2 text-muted">{TOOLS.length} tools, organized by category. Hit <span class="kbd">⌘K</span> from any page to search.</p>
     <div class="mt-8"><ToolGrid /></div>
   </section>
+
+  <section class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-12 prose-tool">
+      <h2>Developer time tools for timestamps, cron and time zones</h2>
+      <p>
+        The Time category is designed for common search and debugging tasks: convert Unix timestamps, get the
+        current epoch time, explain cron expressions, compare time zones, calculate date differences, add or subtract
+        dates, create countdowns, validate ISO 8601 strings, generate Discord timestamp tags, convert durations,
+        find ISO week numbers and calculate ages or anniversaries.
+      </p>
+      <p>
+        These pages render crawlable definitions, examples, FAQs and related links in static HTML, while the
+        interactive calculators run locally in the browser. Cron preset pages provide direct answers for schedules
+        such as <a class="text-accent" href="/cron/every-5-minutes">every 5 minutes</a>, <a class="text-accent" href="/cron/every-weekday">every weekday</a> and <a class="text-accent" href="/cron/monthly-at-9am">monthly at 9 AM</a>.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
