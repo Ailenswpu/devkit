@@ -5,6 +5,8 @@ import { TOOLS } from '../data/tools';
 import { TOOL_EXAMPLES } from '../data/examples';
 import { CRON_PRESETS } from '../data/cronPresets';
 import { BLOG_POSTS } from '../data/blog';
+import { SEO_VARIANTS } from '../data/seoVariants';
+import { CONVERSION_PAGES } from '../data/conversions';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE } from '../lib/seo';
 
 export const GET: APIRoute = () => {
@@ -79,6 +81,40 @@ export const GET: APIRoute = () => {
         out.push(`Q: ${item.q}`);
         out.push(`A: ${item.a}`);
       }
+    }
+    out.push('');
+  }
+
+  out.push('## No-upload and offline intent pages');
+  out.push('These pages target specific privacy-oriented search intents and canonicalize to themselves.');
+  out.push('');
+  for (const variant of SEO_VARIANTS) {
+    out.push(`### ${variant.title}`);
+    out.push(`URL: ${SITE_URL}/${variant.slug}`);
+    out.push(`Parent tool: ${SITE_URL}/${variant.toolSlug}`);
+    out.push(`Summary: ${variant.description}`);
+    out.push(`Example input: ${variant.example.input}`);
+    out.push(`Example output: ${variant.example.output}`);
+    for (const item of variant.faq) {
+      out.push(`Q: ${item.q}`);
+      out.push(`A: ${item.a}`);
+    }
+    out.push('');
+  }
+
+  out.push('## Conversion quick reference pages');
+  out.push('Each conversion page includes a concrete input and output example, FAQ schema and a link to the parent interactive tool.');
+  out.push('');
+  for (const conversion of CONVERSION_PAGES) {
+    out.push(`### ${conversion.title}`);
+    out.push(`URL: ${SITE_URL}/${conversion.slug}`);
+    out.push(`Parent tool: ${SITE_URL}/${conversion.toolSlug}`);
+    out.push(`Input (${conversion.inputLabel}): ${conversion.example.input}`);
+    out.push(`Output (${conversion.outputLabel}): ${conversion.example.output}`);
+    if (conversion.example.note) out.push(`Note: ${conversion.example.note}`);
+    for (const item of conversion.faq) {
+      out.push(`Q: ${item.q}`);
+      out.push(`A: ${item.a}`);
     }
     out.push('');
   }

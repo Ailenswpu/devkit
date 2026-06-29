@@ -5,6 +5,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CommandPalette from '../components/CommandPalette';
 import { TOOLS } from '../data/tools';
+import { SEO_VARIANTS } from '../data/seoVariants';
+import { CONVERSION_PAGES } from '../data/conversions';
 
 export interface Props {
   title: string;
@@ -19,6 +21,11 @@ const { title, description, path, ogImage, jsonLd, noindex = false } = Astro.pro
 const url = canonical(path);
 const image = ogImage || `${SITE_URL}/og-default.png`;
 const ldArr = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const commandPaletteEntries = [
+  ...TOOLS.map(t => ({ slug: t.slug, title: t.title, category: t.category, description: t.subtitle })),
+  ...SEO_VARIANTS.map(page => ({ slug: page.slug, title: page.title, category: 'Guide', description: page.description })),
+  ...CONVERSION_PAGES.map(page => ({ slug: page.slug, title: page.title, category: 'Reference', description: page.description })),
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -76,6 +83,6 @@ const ldArr = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <slot />
     </main>
     <Footer />
-    <CommandPalette client:idle tools={TOOLS.map(t => ({ slug: t.slug, title: t.title, category: t.category, description: t.subtitle }))} />
+    <CommandPalette client:idle tools={commandPaletteEntries} />
   </body>
 </html>

@@ -4,6 +4,8 @@ export const prerender = true;
 import { TOOLS, CATEGORIES } from '../data/tools';
 import { CRON_PRESETS } from '../data/cronPresets';
 import { BLOG_POSTS } from '../data/blog';
+import { SEO_VARIANTS } from '../data/seoVariants';
+import { CONVERSION_PAGES } from '../data/conversions';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE } from '../lib/seo';
 
 export const GET: APIRoute = () => {
@@ -34,6 +36,16 @@ export const GET: APIRoute = () => {
   lines.push('## Privacy and comparison guides');
   for (const post of BLOG_POSTS) {
     lines.push(`- ${post.title}: ${SITE_URL}/blog/${post.slug} — ${post.description}`);
+  }
+  lines.push('');
+  lines.push('## No-upload and offline intent pages');
+  for (const variant of SEO_VARIANTS) {
+    lines.push(`- ${variant.title}: ${SITE_URL}/${variant.slug} — ${variant.description}`);
+  }
+  lines.push('');
+  lines.push('## Conversion quick reference pages');
+  for (const conversion of CONVERSION_PAGES) {
+    lines.push(`- ${conversion.title}: ${SITE_URL}/${conversion.slug} — ${conversion.example.input} => ${conversion.example.output}`);
   }
   lines.push('');
   return new Response(lines.join('\n'), { headers: { 'content-type': 'text/plain; charset=utf-8' } });

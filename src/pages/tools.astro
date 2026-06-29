@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolGrid from '../components/ToolGrid.astro';
 import { SITE_NAME } from '../lib/seo';
 import { TOOLS } from '../data/tools';
+import { SEO_VARIANTS } from '../data/seoVariants';
+import { CONVERSION_PAGES } from '../data/conversions';
 ---
 <BaseLayout
   title={`All tools — ${SITE_NAME}`}
@@ -29,6 +31,36 @@ import { TOOLS } from '../data/tools';
         interactive calculators run locally in the browser. Cron preset pages provide direct answers for schedules
         such as <a class="text-accent" href="/cron/every-5-minutes">every 5 minutes</a>, <a class="text-accent" href="/cron/every-weekday">every weekday</a> and <a class="text-accent" href="/cron/monthly-at-9am">monthly at 9 AM</a>.
       </p>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="grid gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">No-upload and offline intent pages</h2>
+          <p class="mt-3 text-muted leading-7">
+            These focused pages explain privacy-oriented workflows for users searching for local, client-side,
+            no-upload developer tools.
+          </p>
+          <ul class="mt-4 grid gap-2 text-sm">
+            {SEO_VARIANTS.map((page) => (
+              <li><a class="text-accent hover:underline" href={`/${page.slug}`}>{page.title}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">Conversion quick references</h2>
+          <p class="mt-3 text-muted leading-7">
+            Each reference page includes a concrete input, output, FAQ and link to the interactive browser-side tool.
+          </p>
+          <ul class="mt-4 columns-1 sm:columns-2 gap-8 text-sm">
+            {CONVERSION_PAGES.map((page) => (
+              <li class="break-inside-avoid"><a class="text-accent hover:underline" href={`/${page.slug}`}>{page.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>

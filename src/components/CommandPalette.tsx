@@ -44,14 +44,12 @@ export default function CommandPalette({ tools }: { tools: ToolEntry[] }) {
 
   const filtered = useMemo(() => {
     if (!q.trim()) return tools.slice(0, 12);
-    const lc = q.toLowerCase();
+    const terms = q.toLowerCase().trim().split(/\s+/);
     return tools
-      .filter(t =>
-        t.title.toLowerCase().includes(lc) ||
-        t.slug.includes(lc) ||
-        t.description.toLowerCase().includes(lc) ||
-        t.category.toLowerCase().includes(lc),
-      )
+      .filter(t => {
+        const haystack = `${t.title} ${t.slug} ${t.description} ${t.category}`.toLowerCase();
+        return terms.every(term => haystack.includes(term));
+      })
       .slice(0, 20);
   }, [q, tools]);
 
@@ -85,7 +83,7 @@ export default function CommandPalette({ tools }: { tools: ToolEntry[] }) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search tools…"
+            placeholder="Search tools and guides..."
             value={q}
             onInput={(e) => setQ((e.target as HTMLInputElement).value)}
             onKeyDown={onInputKey}
@@ -95,7 +93,7 @@ export default function CommandPalette({ tools }: { tools: ToolEntry[] }) {
         </div>
         <ul class="max-h-80 overflow-auto py-1" role="listbox">
           {filtered.length === 0 && (
-            <li class="px-4 py-6 text-sm text-muted text-center">No tools match "{q}".</li>
+            <li class="px-4 py-6 text-sm text-muted text-center">No results match "{q}".</li>
           )}
           {filtered.map((t, i) => (
             <li
