@@ -1,0 +1,48 @@
+name: IndexNow
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    name: Submit sitemap URLs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Cloudflare Pages usually deploys from the same push. This gives the
+      # public site time to serve the new pages before IndexNow is pinged.
+      INDEXNOW_DEPLOY_WAIT_SECONDS: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build sitemap
+        run: npm run build
+
+      - name: Wait for Pages deployment
+        run: sleep "$INDEXNOW_DEPLOY_WAIT_SECONDS"
+
+      - name: Submit IndexNow URLs
+        run: npm run indexnow
