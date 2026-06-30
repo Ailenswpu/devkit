@@ -97,6 +97,55 @@ a { color: inherit; }
   box-shadow: 0 0 0 3px rgb(var(--accent) / .25);
 }
 
+.tool-shell .markdown-converter textarea {
+  min-height: clamp(300px, 42vh, 430px);
+  resize: none;
+  border-radius: 10px;
+  border-color: rgb(var(--border) / .9);
+  background:
+    linear-gradient(180deg, rgb(var(--elevated) / .92), rgb(var(--bg) / .72));
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 1px 2px rgb(0 0 0 / .06);
+}
+.tool-shell .markdown-converter textarea[readonly] {
+  background:
+    linear-gradient(180deg, rgb(var(--elevated) / .78), rgb(var(--bg) / .58));
+}
+.tool-shell .markdown-converter textarea:hover {
+  border-color: rgb(var(--accent) / .45);
+}
+.tool-shell .markdown-converter textarea:focus {
+  border-color: rgb(var(--accent));
+  box-shadow:
+    0 0 0 3px rgb(var(--accent) / .22),
+    inset 0 1px 0 rgb(255 255 255 / .04);
+}
+.tool-shell .markdown-converter textarea::placeholder {
+  color: rgb(var(--muted) / .58);
+}
+.tool-shell .markdown-converter textarea::-webkit-scrollbar {
+  width: 10px;
+}
+.tool-shell .markdown-converter textarea::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+.tool-shell .markdown-converter .markdown-preview-pane {
+  min-height: clamp(300px, 42vh, 430px);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgb(var(--elevated) / .78), rgb(var(--bg) / .58));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 1px 2px rgb(0 0 0 / .06);
+}
+
 .btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 14px; border-radius: 8px;

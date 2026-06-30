@@ -130,7 +130,7 @@ export default function ToMarkdown() {
   }
 
   return (
-    <div class="space-y-4">
+    <div class="markdown-converter space-y-4">
       <div
         class="rounded-lg border border-dashed border-accent/35 bg-elevated p-4 transition-colors hover:border-accent/70"
         onDragOver={(event) => event.preventDefault()}
@@ -180,7 +180,7 @@ export default function ToMarkdown() {
         />
       </div>
 
-      <div class="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+      <div class="grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <Panel
           title="Input"
           action={
@@ -231,12 +231,12 @@ export default function ToMarkdown() {
           {outputMode === 'markdown' ? (
             <textarea readOnly value={markdown} placeholder="Converted Markdown appears here." aria-label="Markdown output" />
           ) : (
-            <div class="card min-h-[220px] overflow-auto p-4 prose-tool" dangerouslySetInnerHTML={{ __html: previewHtml }} />
+            <div class="markdown-preview-pane card overflow-auto p-4 prose-tool" dangerouslySetInnerHTML={{ __html: previewHtml }} />
           )}
         </Panel>
       </div>
 
-      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div class="rounded-lg border border-border bg-surface p-4">
           <div class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">Output options</div>
           <div class="grid gap-2 sm:grid-cols-2">
