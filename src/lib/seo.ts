@@ -2,7 +2,7 @@ import type { Tool } from '../data/tools';
 
 export const SITE_NAME = 'inbrowser.sh';
 export const SITE_URL = 'https://inbrowser.sh';
-export const SITE_TAGLINE = 'Private developer tools that run locally in your browser.';
+export const SITE_TAGLINE = 'Private Markdown converter and developer tools that run locally in your browser.';
 export const CONTACT_EMAIL = 'support@inbrowser.sh';
 export const GITHUB_URL = 'https://github.com/Ailenswpu/devkit';
 export const ADSENSE_PUBLISHER_ID = 'pub-4423552696854564';
@@ -102,9 +102,10 @@ export function toolsCollectionLD(tools: Tool[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `${SITE_NAME} developer tools`,
-    description: SITE_TAGLINE,
+    name: `${SITE_NAME} Markdown converter and developer tools`,
+    description: 'Browser-side Markdown conversion plus private developer tools for JSON, encoding, text, hashes, IDs, color and time.',
     url: canonical('/tools'),
+    keywords: ['markdown converter', 'html to markdown', 'pdf to markdown', 'docx to markdown', 'private developer tools'],
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: tools.length,

@@ -4,26 +4,45 @@ import ToolGrid from '../components/ToolGrid.astro';
 import { SITE_NAME, SITE_TAGLINE, organizationLD, toolsCollectionLD, websiteLD } from '../lib/seo';
 import { TOOLS } from '../data/tools';
 
-const title = `${SITE_NAME} — ${SITE_TAGLINE}`;
-const description = 'A growing set of fast, private developer tools — JSON, Base64, regex, hashes, UUIDs, color, QR codes and more. 100% client-side, no signup.';
+const title = `Private Markdown Converter & Browser Developer Tools | ${SITE_NAME}`;
+const description = 'Convert HTML, PDF, DOCX, XLSX, CSV, JSON and more to Markdown in your browser. Private no-upload Markdown converter plus developer tools.';
 ---
 <BaseLayout title={title} description={description} path="/" jsonLd={[websiteLD(), organizationLD(), toolsCollectionLD(TOOLS)]}>
   <section class="max-w-6xl mx-auto px-4 pt-12 md:pt-16 pb-6">
     <div class="max-w-3xl">
-      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">Private tools<br />that run in your browser.</h1>
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">Private Markdown converter<br />that runs in your browser.</h1>
       <p class="mt-4 text-lg text-muted">
-        {TOOLS.length}+ tools for JSON, encoding, text, crypto, color, timestamps and cron — processed locally in your browser. No accounts. No uploads. Ready for offline-first workflows.
+        Convert files and pasted content to Markdown for docs, READMEs, RAG and LLM context. HTML, PDF, DOCX, XLSX, CSV, JSON and more are processed locally with no account and no upload.
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
-        <a href="/json-formatter" class="btn btn-primary">Try JSON Formatter</a>
-        <a href="/mock-data-generator" class="btn">Mock data</a>
-        <a href="/timestamp-now" class="btn">Current timestamp</a>
-        <a href="/cron" class="btn">Cron parser</a>
+        <a href="/to-markdown" class="btn btn-primary">Convert to Markdown</a>
+        <a href="/html-to-markdown" class="btn">HTML to Markdown</a>
+        <a href="/pdf-to-markdown" class="btn">PDF to Markdown</a>
+        <a href="/json-formatter" class="btn">JSON Formatter</a>
         <button id="open-cmdk" class="btn" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           Search tools
           <span class="kbd ml-1">⌘K</span>
         </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 pb-10">
+    <div class="border-y border-border py-5">
+      <div class="grid gap-4 lg:grid-cols-[1fr_2fr] lg:items-center">
+        <div>
+          <h2 class="text-xl font-semibold tracking-tight">All to Markdown</h2>
+          <p class="mt-2 text-sm text-muted leading-6">
+            The Markdown converter is the primary workspace for turning local documents, exports and tables into clean Markdown.
+          </p>
+        </div>
+        <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          <a class="rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:border-accent/60" href="/docx-to-markdown">DOCX to Markdown</a>
+          <a class="rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:border-accent/60" href="/csv-to-markdown">CSV to Markdown</a>
+          <a class="rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:border-accent/60" href="/xlsx-to-markdown">Excel to Markdown</a>
+          <a class="rounded-lg border border-border bg-surface px-3 py-2 text-sm hover:border-accent/60" href="/json-to-markdown">JSON to Markdown</a>
+        </div>
       </div>
     </div>
   </section>

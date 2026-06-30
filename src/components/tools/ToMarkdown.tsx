@@ -44,6 +44,8 @@ const DEFAULT_OPTIONS: Options = {
   frontMatter: false,
 };
 
+const FORMAT_LABELS = ['HTML', 'PDF', 'DOCX', 'XLSX', 'CSV', 'JSON', 'PPTX', 'RSS'];
+
 marked.setOptions({ gfm: true, breaks: false });
 
 export default function ToMarkdown() {
@@ -130,7 +132,7 @@ export default function ToMarkdown() {
   return (
     <div class="space-y-4">
       <div
-        class="rounded-lg border border-dashed border-border bg-bg p-4 transition-colors hover:border-accent/60"
+        class="rounded-lg border border-dashed border-accent/35 bg-elevated p-4 transition-colors hover:border-accent/70"
         onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => {
           event.preventDefault();
@@ -139,13 +141,18 @@ export default function ToMarkdown() {
       >
         <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div class="flex items-start gap-3">
-            <div class="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface">
+            <div class="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg border border-accent/35 bg-accent/10 text-accent">
               <UploadCloud size={20} aria-hidden="true" />
             </div>
             <div>
-              <div class="font-medium">Drop a file or paste content</div>
+              <div class="font-semibold tracking-tight">Drop a file or paste content</div>
               <div class="mt-1 text-sm text-muted">
                 HTML, DOCX, XLSX, CSV, TSV, PPTX, JSON, PDF, RSS, RTF, TXT and Markdown files stay in this browser.
+              </div>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {FORMAT_LABELS.map((label) => (
+                  <span key={label} class="rounded-md border border-border bg-surface px-2 py-1 text-[11px] font-medium text-muted">{label}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -154,7 +161,7 @@ export default function ToMarkdown() {
               <FileText size={16} aria-hidden="true" />
               Choose file
             </button>
-            <button type="button" class="btn" onClick={runTextConversion} disabled={busy}>
+            <button type="button" class="btn disabled:cursor-not-allowed disabled:opacity-55" onClick={runTextConversion} disabled={busy}>
               {busy ? <Loader2 class="animate-spin" size={16} aria-hidden="true" /> : <FileText size={16} aria-hidden="true" />}
               Convert pasted text
             </button>
@@ -173,7 +180,7 @@ export default function ToMarkdown() {
         />
       </div>
 
-      <div class="grid gap-4 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <Panel
           title="Input"
           action={
@@ -203,11 +210,11 @@ export default function ToMarkdown() {
           error={error}
           action={
             <div class="flex flex-wrap gap-1">
-              <button type="button" class="btn btn-ghost text-xs" onClick={copyOutput} disabled={!markdown}>
+              <button type="button" class="btn btn-ghost text-xs disabled:cursor-not-allowed disabled:opacity-55" onClick={copyOutput} disabled={!markdown}>
                 <Copy size={14} aria-hidden="true" />
                 Copy
               </button>
-              <button type="button" class="btn btn-ghost text-xs" onClick={downloadOutput} disabled={!markdown}>
+              <button type="button" class="btn btn-ghost text-xs disabled:cursor-not-allowed disabled:opacity-55" onClick={downloadOutput} disabled={!markdown}>
                 <Download size={14} aria-hidden="true" />
                 Download
               </button>
@@ -230,7 +237,7 @@ export default function ToMarkdown() {
       </div>
 
       <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <div class="card p-4">
+        <div class="rounded-lg border border-border bg-surface p-4">
           <div class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">Output options</div>
           <div class="grid gap-2 sm:grid-cols-2">
             <Checkbox label="Readable article extraction" checked={options.readability} onChange={(value) => setOption('readability', value)} />
@@ -242,9 +249,9 @@ export default function ToMarkdown() {
           </div>
         </div>
 
-        <div class="card p-4">
+        <div class={`rounded-lg border p-4 ${error ? 'border-red-500/45 bg-red-500/5' : 'border-border bg-surface'}`}>
           <div class="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Status</div>
-          <p class="text-sm text-muted">{status}</p>
+          <p class={`text-sm ${error ? 'text-red-500' : 'text-muted'}`}>{error || status}</p>
           {fileName && <p class="mt-2 text-xs text-muted">Selected file: {fileName}</p>}
           {notices.length > 0 && (
             <ul class="mt-3 space-y-1 text-xs text-muted">
@@ -370,13 +377,17 @@ async function convertHtml(html: string, options: Options, title: string): Promi
   const notices: string[] = [];
 
   if (options.readability) {
-    const { Readability } = await import('@mozilla/readability');
-    const article = new Readability(doc.cloneNode(true) as Document).parse();
-    if (article?.content) {
-      htmlToConvert = article.content;
-      resolvedTitle = article.title || resolvedTitle;
-    } else {
-      notices.push('Readable article extraction found no main article, so the full HTML body was converted.');
+    try {
+      const { Readability } = await import('@mozilla/readability');
+      const article = new Readability(doc.cloneNode(true) as Document).parse();
+      if (article?.content) {
+        htmlToConvert = article.content;
+        resolvedTitle = article.title || resolvedTitle;
+      } else {
+        notices.push('Readable article extraction found no main article, so the full HTML body was converted.');
+      }
+    } catch {
+      notices.push('Readable article extraction failed, so the full HTML body was converted.');
     }
   }
 

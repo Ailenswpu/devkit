@@ -1,4 +1,5 @@
 export type ToolCategory =
+  | 'Markdown'
   | 'JSON'
   | 'Encoding'
   | 'Text'
@@ -56,13 +57,14 @@ export interface Tool {
 }
 
 export const CATEGORIES: { id: ToolCategory; label: string; blurb: string }[] = [
+  { id: 'Markdown',   label: 'Markdown',   blurb: 'Convert files and preview Markdown locally.' },
   { id: 'JSON',       label: 'JSON',       blurb: 'Format, convert and inspect JSON.' },
   { id: 'Encoding',   label: 'Encoding',   blurb: 'Base64, URL, HTML entities and more.' },
   { id: 'Text',       label: 'Text',       blurb: 'Case, diff, dedupe, transform.' },
   { id: 'Crypto',     label: 'Crypto',     blurb: 'Hashing and token tools — all in your browser.' },
   { id: 'Generators', label: 'Generators', blurb: 'UUIDs, lorem, QR codes and more.' },
   { id: 'Color',      label: 'Color',      blurb: 'Convert and inspect color values.' },
-  { id: 'Web',        label: 'Web',        blurb: 'Markdown, regex and other web helpers.' },
+  { id: 'Web',        label: 'Web',        blurb: 'Regex and other web helpers.' },
   { id: 'Time',       label: 'Time',       blurb: 'Timestamps, cron, time zones and date math.' },
 ];
 
@@ -458,33 +460,12 @@ export const TOOLS: Tool[] = [
     componentId: 'LoremIpsum',
   },
   {
-    slug: 'markdown-preview',
-    title: 'Markdown Preview',
-    h1: 'Markdown Live Preview',
-    subtitle: 'Write Markdown, see the rendered HTML side-by-side — instantly.',
-    description: 'Free online Markdown editor with live preview. Sanitized rendering via marked + DOMPurify. 100% client-side.',
-    category: 'Web',
-    keywords: ['markdown preview', 'markdown editor', 'live markdown'],
-    related: ['html-entities', 'text-diff'],
-    intro: 'Markdown Preview renders GitHub-flavored Markdown on the fly so you can draft READMEs and comments with full visual feedback.',
-    howto: [
-      'Type Markdown on the left.',
-      'See the rendered HTML on the right.',
-      'Copy the HTML when you are done.',
-    ],
-    faq: [
-      { q: 'Is the HTML sanitized?', a: 'Yes — output is sanitized via DOMPurify so it is safe to paste into a CMS.' },
-      { q: 'Does it support tables and code blocks?', a: 'Yes. GFM is enabled.' },
-    ],
-    componentId: 'MarkdownPreview',
-  },
-  {
     slug: 'to-markdown',
     title: 'To Markdown',
     h1: 'All to Markdown Converter',
     subtitle: 'Convert files and pasted content to Markdown locally in your browser.',
     description: 'Free all-to-Markdown converter for HTML, DOCX, XLSX, CSV, TSV, PPTX, JSON, PDF, RSS, RTF and text. No upload.',
-    category: 'Web',
+    category: 'Markdown',
     keywords: ['to markdown', 'html to markdown', 'docx to markdown', 'pdf to markdown', 'csv to markdown', 'all to markdown'],
     related: ['markdown-preview', 'json-to-csv', 'html-entities'],
     intro: 'To Markdown converts common files and pasted content into Markdown for docs, READMEs, RAG pipelines and LLM context preparation. Files are parsed in the browser, so document contents do not need to leave your device.',
@@ -500,6 +481,27 @@ export const TOOLS: Tool[] = [
       { q: 'Does it convert live web URLs?', a: 'Live URL fetching needs a server-side fetcher because browsers enforce CORS. Use saved HTML with this client-side tool; the server URL converter is planned separately.' },
     ],
     componentId: 'ToMarkdown',
+  },
+  {
+    slug: 'markdown-preview',
+    title: 'Markdown Preview',
+    h1: 'Markdown Live Preview',
+    subtitle: 'Write Markdown, see the rendered HTML side-by-side — instantly.',
+    description: 'Free online Markdown editor with live preview. Sanitized rendering via marked + DOMPurify. 100% client-side.',
+    category: 'Markdown',
+    keywords: ['markdown preview', 'markdown editor', 'live markdown'],
+    related: ['to-markdown', 'html-entities', 'text-diff'],
+    intro: 'Markdown Preview renders GitHub-flavored Markdown on the fly so you can draft READMEs and comments with full visual feedback.',
+    howto: [
+      'Type Markdown on the left.',
+      'See the rendered HTML on the right.',
+      'Copy the HTML when you are done.',
+    ],
+    faq: [
+      { q: 'Is the HTML sanitized?', a: 'Yes — output is sanitized via DOMPurify so it is safe to paste into a CMS.' },
+      { q: 'Does it support tables and code blocks?', a: 'Yes. GFM is enabled.' },
+    ],
+    componentId: 'MarkdownPreview',
   },
   {
     slug: 'timestamp',

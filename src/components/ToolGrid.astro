@@ -12,17 +12,20 @@ const grouped = toolsByCategory();
           <span class="text-xs text-muted">{cat.blurb}</span>
         </header>
         <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {grouped[cat.id].map(t => (
-            <li>
+          {grouped[cat.id].map(t => {
+            const primaryMarkdown = cat.id === 'Markdown' && t.slug === 'to-markdown';
+            return (
+            <li class={primaryMarkdown ? 'sm:col-span-2 lg:col-span-2' : ''}>
               <a
                 href={`/${t.slug}`}
-                class="card p-4 block h-full transition-all hover:border-accent/60 hover:translate-y-[-1px]"
+                class={`card block h-full transition-all hover:border-accent/60 hover:translate-y-[-1px] ${primaryMarkdown ? 'p-5 bg-elevated border-accent/45' : 'p-4'}`}
               >
-                <div class="font-medium tracking-tight">{t.title}</div>
-                <div class="text-xs text-muted mt-1 line-clamp-2">{t.subtitle}</div>
+                <div class={primaryMarkdown ? 'text-lg font-semibold tracking-tight' : 'font-medium tracking-tight'}>{t.title}</div>
+                <div class={`${primaryMarkdown ? 'text-sm' : 'text-xs line-clamp-2'} text-muted mt-1`}>{t.subtitle}</div>
               </a>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </section>
     )

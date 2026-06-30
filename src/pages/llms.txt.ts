@@ -19,6 +19,13 @@ export const GET: APIRoute = () => {
   lines.push(`## Privacy`);
   lines.push(`Every tool runs entirely in the user's browser. No upload, no signup, no tracking cookies.`);
   lines.push('');
+  lines.push('## Primary Markdown conversion module');
+  lines.push(`- To Markdown: ${SITE_URL}/to-markdown — Convert HTML, PDF, DOCX, XLSX, CSV, TSV, PPTX, JSON, RSS, RTF and text to Markdown in the browser.`);
+  lines.push(`- HTML to Markdown: ${SITE_URL}/html-to-markdown — Browser-side HTML and saved webpage conversion with readable article extraction.`);
+  lines.push(`- PDF to Markdown: ${SITE_URL}/pdf-to-markdown — Best-effort local PDF text extraction for Markdown, with layout caveats.`);
+  lines.push(`- DOCX to Markdown: ${SITE_URL}/docx-to-markdown — Convert Word documents to Markdown locally.`);
+  lines.push(`- CSV to Markdown: ${SITE_URL}/csv-to-markdown — Convert CSV or TSV to GitHub-flavored Markdown tables locally.`);
+  lines.push('');
   for (const cat of CATEGORIES) {
     const tools = TOOLS.filter(t => t.category === cat.id);
     if (tools.length === 0) continue;
@@ -44,7 +51,7 @@ export const GET: APIRoute = () => {
   }
   lines.push('');
   lines.push('## Conversion quick reference pages');
-  for (const conversion of CONVERSION_PAGES) {
+  for (const conversion of CONVERSION_PAGES.filter(page => page.toolSlug !== 'to-markdown')) {
     lines.push(`- ${conversion.title}: ${SITE_URL}/${conversion.slug} — ${conversion.example.input} => ${conversion.example.output}`);
   }
   lines.push('');

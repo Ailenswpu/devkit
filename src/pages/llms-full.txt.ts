@@ -18,6 +18,19 @@ export const GET: APIRoute = () => {
   out.push('');
   out.push(`Total tools: ${TOOLS.length}. Authoritative URL: ${SITE_URL}`);
   out.push('');
+  out.push('## Primary Markdown conversion module');
+  out.push('The primary inbrowser.sh workflow is To Markdown: a browser-side converter for preparing Markdown from local files, exports and pasted content.');
+  out.push(`Main tool: ${SITE_URL}/to-markdown`);
+  out.push('Supported local inputs: HTML, saved webpages, DOCX, XLSX/XLS, CSV, TSV, PPTX, JSON, PDF, RSS/XML, RTF, TXT and existing Markdown.');
+  out.push('Privacy boundary: file conversion runs in the browser; file contents do not need to be uploaded to inbrowser.sh.');
+  out.push('Quality boundary: PDF and PPTX conversion are best-effort text extraction workflows; layouts, tables, columns, images and speaker notes may need manual cleanup.');
+  out.push('URL boundary: live URL-to-Markdown requires a server-side fetcher because browsers enforce CORS; saved HTML converts locally today.');
+  out.push('');
+  out.push('Important Markdown pages:');
+  for (const conversion of CONVERSION_PAGES.filter(page => page.toolSlug === 'to-markdown')) {
+    out.push(`- ${conversion.title}: ${SITE_URL}/${conversion.slug} — ${conversion.description}`);
+  }
+  out.push('');
   out.push('---');
   out.push('');
 
@@ -105,7 +118,7 @@ export const GET: APIRoute = () => {
   out.push('## Conversion quick reference pages');
   out.push('Each conversion page includes a concrete input and output example, FAQ schema and a link to the parent interactive tool.');
   out.push('');
-  for (const conversion of CONVERSION_PAGES) {
+  for (const conversion of CONVERSION_PAGES.filter(page => page.toolSlug !== 'to-markdown')) {
     out.push(`### ${conversion.title}`);
     out.push(`URL: ${SITE_URL}/${conversion.slug}`);
     out.push(`Parent tool: ${SITE_URL}/${conversion.toolSlug}`);

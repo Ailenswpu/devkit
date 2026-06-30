@@ -5,6 +5,7 @@ import { TOOLS, TOOLS_BY_SLUG } from '../data/tools';
 import { SEO_VARIANTS, SEO_VARIANTS_BY_SLUG } from '../data/seoVariants';
 import { CONVERSION_PAGES, CONVERSION_PAGES_BY_SLUG } from '../data/conversions';
 import { SITE_NAME, canonical } from '../lib/seo';
+import ToMarkdown from '../components/tools/ToMarkdown';
 
 export function getStaticPaths() {
   return [
@@ -123,6 +124,12 @@ const pageJsonLd = page ? [
         </div>
         {page.example.note && <p class="md:col-span-2 text-sm text-muted">{page.example.note}</p>}
       </section>
+
+      {conversion?.toolSlug === 'to-markdown' && (
+        <section aria-label={`${page.title} workspace`} class="tool-shell card p-4 md:p-6 mt-8">
+          <ToMarkdown client:only="preact" />
+        </section>
+      )}
 
       <div class="mt-10 grid gap-8 md:grid-cols-3">
         <div class="md:col-span-2 prose-tool">
