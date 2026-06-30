@@ -1,3 +1,5 @@
+import { MARKDOWN_CONVERSION_PAGES } from './markdown-conversions';
+
 export interface ConversionPage {
   slug: string;
   toolSlug: string;
@@ -11,6 +13,7 @@ export interface ConversionPage {
   steps: string[];
   faq: { q: string; a: string }[];
   related: string[];
+  availability?: 'client' | 'server' | 'planned';
 }
 
 export const CONVERSION_PAGES: ConversionPage[] = [
@@ -507,6 +510,7 @@ export const CONVERSION_PAGES: ConversionPage[] = [
     ],
     related: ['seconds-to-hours', 'duration-converter', 'countdown'],
   },
+  ...MARKDOWN_CONVERSION_PAGES,
 ];
 
 export const CONVERSION_PAGES_BY_SLUG = new Map(CONVERSION_PAGES.map((page) => [page.slug, page] as const));

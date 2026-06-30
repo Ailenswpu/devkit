@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import { type Tool, relatedTools } from '../data/tools';
 import { TOOL_EXAMPLES } from '../data/examples';
 import { CRON_PRESETS } from '../data/cronPresets';
+import { CONVERSION_PAGES } from '../data/conversions';
 import { toolTitle, softwareApplicationLD, breadcrumbLD, faqLD, howToLD } from '../lib/seo';
 
 import JsonFormatter from '../components/tools/JsonFormatter';
@@ -22,6 +23,7 @@ import QrCode from '../components/tools/QrCode';
 import LoremIpsum from '../components/tools/LoremIpsum';
 import MockDataGenerator from '../components/tools/MockDataGenerator';
 import MarkdownPreview from '../components/tools/MarkdownPreview';
+import ToMarkdown from '../components/tools/ToMarkdown';
 import JsonToCsv from '../components/tools/JsonToCsv';
 import JsonToYaml from '../components/tools/JsonToYaml';
 import {
@@ -47,6 +49,7 @@ const { tool } = Astro.props;
 const related = relatedTools(tool);
 const jsonLd = [softwareApplicationLD(tool), breadcrumbLD(tool), howToLD(tool), faqLD(tool)];
 const example = TOOL_EXAMPLES[tool.slug];
+const conversionPages = CONVERSION_PAGES.filter(page => page.toolSlug === tool.slug);
 
 const cid = tool.componentId;
 ---
@@ -106,6 +109,7 @@ const cid = tool.componentId;
       {cid === 'LoremIpsum' && <LoremIpsum client:load />}
       {cid === 'MockDataGenerator' && <MockDataGenerator client:load />}
       {cid === 'MarkdownPreview' && <MarkdownPreview client:only="preact" />}
+      {cid === 'ToMarkdown' && <ToMarkdown client:only="preact" />}
       {cid === 'JsonToCsv' && <JsonToCsv client:load />}
       {cid === 'JsonToYaml' && <JsonToYaml client:load />}
       {cid === 'TimestampTool' && <TimestampTool client:load />}
@@ -158,6 +162,22 @@ const cid = tool.componentId;
           opening a full IDE or command-line workflow would be slower. For production-critical data, always review
           the output before committing or shipping it.
         </p>
+
+        {tool.slug === 'to-markdown' && conversionPages.length > 0 && (
+          <>
+            <h2>X to Markdown pages</h2>
+            <p>
+              Use these static references for format-specific examples, privacy notes and conversion caveats.
+            </p>
+            <ul class="columns-1 sm:columns-2 gap-8">
+              {conversionPages.map(page => (
+                <li class="break-inside-avoid">
+                  <a class="text-accent" href={`/${page.slug}`}>{page.title}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2>Frequently asked questions</h2>
         <div class="space-y-2 mt-3">

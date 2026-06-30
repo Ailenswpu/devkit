@@ -1,0 +1,357 @@
+import type { ConversionPage } from './conversions';
+
+type MarkdownPageInput = Omit<ConversionPage, 'toolSlug' | 'outputLabel'> & {
+  outputLabel?: string;
+};
+
+const privacyFaq = {
+  q: 'Is my file uploaded?',
+  a: 'No. The linked To Markdown tool parses supported files in your browser. Your file contents do not need to be uploaded to inbrowser.sh.',
+};
+
+const reviewFaq = {
+  q: 'Should I review the Markdown output?',
+  a: 'Yes. Markdown conversion is practical but not perfect, especially for layouts, tables, slides and PDF text extraction.',
+};
+
+function markdownPage(page: MarkdownPageInput): ConversionPage {
+  return {
+    toolSlug: 'to-markdown',
+    outputLabel: 'Markdown',
+    ...page,
+  };
+}
+
+export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
+  markdownPage({
+    slug: 'html-to-markdown',
+    title: 'HTML to Markdown Converter',
+    h1: 'HTML to Markdown',
+    description: 'Convert HTML files or pasted HTML to clean Markdown locally in your browser. No upload, no signup.',
+    intro: 'HTML to Markdown conversion is useful when turning exported pages, CMS content or article HTML into Markdown for docs, READMEs and LLM context.',
+    inputLabel: 'HTML',
+    example: {
+      input: '<article><h1>Guide</h1><p>Hello <strong>world</strong>.</p></article>',
+      output: '# Guide\n\nHello **world**.',
+    },
+    steps: ['Paste HTML or choose an .html file.', 'Keep readable article extraction on for article pages.', 'Copy or download the Markdown output.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does it remove navigation and ads?', a: 'Readable article extraction can strip much of the surrounding page chrome before Turndown converts the HTML.' },
+      reviewFaq,
+    ],
+    related: ['to-markdown', 'webpage-to-markdown', 'url-to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'pdf-to-markdown',
+    title: 'PDF to Markdown Converter',
+    h1: 'PDF to Markdown',
+    description: 'Extract text from PDF files and convert it to Markdown in your browser. Best-effort, no upload.',
+    intro: 'PDF to Markdown extracts page text for notes, documentation and LLM context. It is best for text-first PDFs, not pixel-perfect layout recreation.',
+    inputLabel: 'PDF file',
+    example: {
+      input: 'report.pdf',
+      output: '## Page 1\n\nQuarterly Report\n\nRevenue increased by 12%.',
+      note: 'PDF tables, columns and images can be lossy because the converter extracts text rather than recreating layout.',
+    },
+    steps: ['Choose a PDF under 20MB.', 'Wait for text extraction to finish in the browser.', 'Review page breaks and headings before using the Markdown.'],
+    faq: [
+      privacyFaq,
+      { q: 'Will tables be preserved?', a: 'Usually not perfectly. PDF stores positioned text, so tables and columns may need manual cleanup after extraction.' },
+      reviewFaq,
+    ],
+    related: ['to-markdown', 'docx-to-markdown', 'image-to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'docx-to-markdown',
+    title: 'DOCX to Markdown Converter',
+    h1: 'DOCX to Markdown',
+    description: 'Convert DOCX Word documents to Markdown locally with Mammoth and Turndown. No upload.',
+    intro: 'DOCX to Markdown converts Word documents into Markdown that is easier to version, publish or pass into LLM workflows.',
+    inputLabel: 'DOCX file',
+    example: {
+      input: 'brief.docx with Heading 1 and bullet list',
+      output: '# Project brief\n\n- Goal\n- Scope\n- Timeline',
+    },
+    steps: ['Choose a .docx file.', 'Let the browser convert DOCX to HTML, then Markdown.', 'Review images, comments and complex styles before publishing.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does it support old .doc files?', a: 'This browser tool supports DOCX. Save older .doc files as DOCX first.' },
+      reviewFaq,
+    ],
+    related: ['word-to-markdown', 'google-docs-to-markdown', 'to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'word-to-markdown',
+    title: 'Word to Markdown Converter',
+    h1: 'Word to Markdown',
+    description: 'Convert Microsoft Word DOCX files to Markdown in your browser. Private, no-upload workflow.',
+    intro: 'Word to Markdown is the practical route from Word drafts to GitHub, static sites, internal docs and AI-ready context files.',
+    inputLabel: 'Word DOCX file',
+    example: {
+      input: 'proposal.docx',
+      output: '# Proposal\n\n## Summary\n\nThe first draft converted from Word.',
+    },
+    steps: ['Export or save the document as DOCX.', 'Drop it into the To Markdown tool.', 'Copy the Markdown and clean up any document-specific styling.'],
+    faq: [
+      privacyFaq,
+      { q: 'Are Word comments preserved?', a: 'No. The converter focuses on document content, headings, lists and tables rather than review metadata.' },
+      reviewFaq,
+    ],
+    related: ['docx-to-markdown', 'google-docs-to-markdown', 'to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'pptx-to-markdown',
+    title: 'PPTX to Markdown Converter',
+    h1: 'PPTX to Markdown',
+    description: 'Extract slide text from PPTX files into Markdown sections locally in your browser.',
+    intro: 'PPTX to Markdown is a best-effort way to turn slide text into notes, outlines and LLM context while keeping the file local.',
+    inputLabel: 'PPTX file',
+    example: {
+      input: 'deck.pptx with three slides',
+      output: '## Slide 1\n\nRoadmap\n\n## Slide 2\n\nLaunch checklist',
+      note: 'Slide layout, images and speaker notes are not recreated.',
+    },
+    steps: ['Choose a .pptx file.', 'The browser reads slide XML and extracts text per slide.', 'Review the outline and add missing visual context manually.'],
+    faq: [
+      privacyFaq,
+      { q: 'Will slide images become Markdown images?', a: 'No. This release extracts slide text only.' },
+      reviewFaq,
+    ],
+    related: ['powerpoint-to-markdown', 'to-markdown', 'markdown-preview', 'pdf-to-markdown'],
+  }),
+  markdownPage({
+    slug: 'powerpoint-to-markdown',
+    title: 'PowerPoint to Markdown Converter',
+    h1: 'PowerPoint to Markdown',
+    description: 'Convert PowerPoint PPTX slide text to Markdown locally, grouped by slide.',
+    intro: 'PowerPoint to Markdown helps convert decks into outlines for docs, meeting notes and AI summarization inputs.',
+    inputLabel: 'PowerPoint PPTX file',
+    example: {
+      input: 'training.pptx',
+      output: '## Slide 1\n\nTraining goals\n\n## Slide 2\n\nSetup steps',
+    },
+    steps: ['Save the deck as PPTX.', 'Open it in the To Markdown converter.', 'Use the slide-by-slide Markdown as an editable outline.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does it keep speaker notes?', a: 'No. The current converter reads slide text content only.' },
+      reviewFaq,
+    ],
+    related: ['pptx-to-markdown', 'to-markdown', 'pdf-to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'xlsx-to-markdown',
+    title: 'XLSX to Markdown Table Converter',
+    h1: 'XLSX to Markdown',
+    description: 'Convert Excel XLSX worksheets to GitHub-flavored Markdown tables locally in your browser.',
+    intro: 'XLSX to Markdown turns workbook sheets into Markdown tables for README files, docs, issues and lightweight data sharing.',
+    inputLabel: 'XLSX or XLS file',
+    example: {
+      input: 'Sheet: Tasks\nOwner,Status\nAda,Done',
+      output: '## Tasks\n\n| Owner | Status |\n| --- | --- |\n| Ada | Done |',
+    },
+    steps: ['Choose an Excel workbook.', 'Each worksheet becomes its own Markdown section.', 'Copy the GFM table output.'],
+    faq: [
+      privacyFaq,
+      { q: 'Are formulas preserved?', a: 'The converter outputs displayed cell values, not live spreadsheet formulas.' },
+      reviewFaq,
+    ],
+    related: ['excel-to-markdown', 'csv-to-markdown', 'to-markdown', 'json-to-markdown'],
+  }),
+  markdownPage({
+    slug: 'excel-to-markdown',
+    title: 'Excel to Markdown Converter',
+    h1: 'Excel to Markdown',
+    description: 'Convert Excel XLSX or XLS sheets to Markdown tables in your browser. No upload required.',
+    intro: 'Excel to Markdown is useful when moving small tables from spreadsheets into docs, GitHub issues, specs and changelogs.',
+    inputLabel: 'Excel workbook',
+    example: {
+      input: 'Name,Role\nAda,Engineer',
+      output: '| Name | Role |\n| --- | --- |\n| Ada | Engineer |',
+    },
+    steps: ['Choose an .xlsx or .xls file.', 'Let the browser read each sheet.', 'Paste the Markdown table into your destination.'],
+    faq: [
+      privacyFaq,
+      { q: 'Can it handle multiple sheets?', a: 'Yes. Each sheet is emitted under its own Markdown heading.' },
+      reviewFaq,
+    ],
+    related: ['xlsx-to-markdown', 'csv-to-markdown', 'to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'csv-to-markdown',
+    title: 'CSV to Markdown Table Converter',
+    h1: 'CSV to Markdown',
+    description: 'Convert CSV or TSV data to GitHub-flavored Markdown tables locally in your browser.',
+    intro: 'CSV to Markdown creates clean Markdown tables from comma-separated or tab-separated data without uploading the dataset.',
+    inputLabel: 'CSV or TSV',
+    example: {
+      input: 'Name,Role\nAda,Engineer\nBo,Designer',
+      output: '| Name | Role |\n| --- | --- |\n| Ada | Engineer |\n| Bo | Designer |',
+    },
+    steps: ['Paste CSV/TSV data or choose a file.', 'Confirm the table output.', 'Copy the Markdown into docs, issues or READMEs.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does it support TSV?', a: 'Yes. Paste tab-separated rows or choose a .tsv file.' },
+      reviewFaq,
+    ],
+    related: ['xlsx-to-markdown', 'json-to-markdown', 'json-to-csv', 'to-markdown'],
+  }),
+  markdownPage({
+    slug: 'json-to-markdown',
+    title: 'JSON to Markdown Converter',
+    h1: 'JSON to Markdown',
+    description: 'Convert JSON arrays to Markdown tables or format JSON as fenced Markdown code blocks locally.',
+    intro: 'JSON to Markdown helps turn API samples, config snippets and simple arrays of objects into Markdown for docs and examples.',
+    inputLabel: 'JSON',
+    example: {
+      input: '[{"name":"Ada","role":"Engineer"},{"name":"Bo","role":"Designer"}]',
+      output: '| name | role |\n| --- | --- |\n| Ada | Engineer |\n| Bo | Designer |',
+    },
+    steps: ['Paste JSON or choose a .json file.', 'Arrays of objects become tables; other JSON becomes a fenced code block.', 'Copy the Markdown output.'],
+    faq: [
+      privacyFaq,
+      { q: 'What happens to nested JSON?', a: 'Nested values inside table cells are stringified so the Markdown table stays readable.' },
+      reviewFaq,
+    ],
+    related: ['csv-to-markdown', 'json-to-csv', 'json-formatter', 'to-markdown'],
+  }),
+  markdownPage({
+    slug: 'notion-to-markdown',
+    title: 'Notion to Markdown Converter',
+    h1: 'Notion to Markdown',
+    description: 'Convert exported Notion HTML, CSV or Markdown content with a private browser-side workflow.',
+    intro: 'Notion to Markdown works best from a Notion export. Use the exported HTML, CSV or Markdown file with the To Markdown tool to prepare portable docs or LLM context.',
+    inputLabel: 'Notion export file',
+    example: {
+      input: 'Exported Notion page.html',
+      output: '# Project notes\n\n- Decision log\n- Open questions',
+    },
+    steps: ['Export the Notion page or workspace content.', 'Choose the exported HTML, CSV or Markdown file.', 'Review links and database-style tables after conversion.'],
+    faq: [
+      privacyFaq,
+      { q: 'Can it read private Notion pages directly?', a: 'No. Use a local export file. Direct Notion API import is outside this browser-only tool.' },
+      reviewFaq,
+    ],
+    related: ['html-to-markdown', 'csv-to-markdown', 'to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'google-docs-to-markdown',
+    title: 'Google Docs to Markdown Converter',
+    h1: 'Google Docs to Markdown',
+    description: 'Convert a downloaded Google Docs DOCX or HTML export to Markdown locally in your browser.',
+    intro: 'Google Docs to Markdown is a local workflow: download the document as DOCX or HTML, then convert that file to Markdown in the browser.',
+    inputLabel: 'Google Docs DOCX or HTML export',
+    example: {
+      input: 'Google Docs -> Download -> Microsoft Word (.docx)',
+      output: '# Meeting notes\n\n## Decisions\n\n- Ship the private converter first.',
+    },
+    steps: ['In Google Docs, download as DOCX or HTML.', 'Drop the exported file into To Markdown.', 'Review headings, lists and links before publishing.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does inbrowser.sh connect to my Google account?', a: 'No. This workflow uses a downloaded local file, not Google account access.' },
+      reviewFaq,
+    ],
+    related: ['docx-to-markdown', 'word-to-markdown', 'html-to-markdown', 'to-markdown'],
+  }),
+  markdownPage({
+    slug: 'rtf-to-markdown',
+    title: 'RTF to Markdown Converter',
+    h1: 'RTF to Markdown',
+    description: 'Extract readable text from RTF files and save it as Markdown locally in your browser.',
+    intro: 'RTF to Markdown is a lightweight path for old rich-text notes. The converter extracts text and drops most rich formatting.',
+    inputLabel: 'RTF file',
+    example: {
+      input: '{\\rtf1\\ansi Project notes\\par Next step}',
+      output: 'Project notes\n\nNext step',
+      note: 'RTF support is basic text extraction rather than full rich-text conversion.',
+    },
+    steps: ['Choose a .rtf file.', 'The browser strips RTF control words into readable text.', 'Add Markdown headings or lists where needed.'],
+    faq: [
+      privacyFaq,
+      { q: 'Will bold and italic formatting survive?', a: 'Not reliably. This release focuses on extracting readable text from RTF.' },
+      reviewFaq,
+    ],
+    related: ['word-to-markdown', 'docx-to-markdown', 'to-markdown', 'markdown-preview'],
+  }),
+  markdownPage({
+    slug: 'rss-to-markdown',
+    title: 'RSS to Markdown Converter',
+    h1: 'RSS to Markdown',
+    description: 'Convert RSS or Atom XML feed files to Markdown outlines locally in your browser.',
+    intro: 'RSS to Markdown converts feed titles, links and descriptions into a Markdown outline for reading lists, research notes and content audits.',
+    inputLabel: 'RSS or Atom XML',
+    example: {
+      input: '<rss><channel><title>Blog</title><item><title>Post</title><link>https://example.com/post</link></item></channel></rss>',
+      output: '# Blog\n\n## Post\n\nhttps://example.com/post',
+    },
+    steps: ['Paste RSS/Atom XML or choose an .xml/.rss file.', 'The browser extracts feed entries.', 'Copy the Markdown outline.'],
+    faq: [
+      privacyFaq,
+      { q: 'Does it fetch feed URLs?', a: 'No. Paste XML or use a downloaded feed file for this browser-only workflow.' },
+      reviewFaq,
+    ],
+    related: ['url-to-markdown', 'webpage-to-markdown', 'to-markdown', 'html-to-markdown'],
+  }),
+  markdownPage({
+    slug: 'url-to-markdown',
+    title: 'URL to Markdown Converter',
+    h1: 'URL to Markdown',
+    description: 'Learn the safe URL to Markdown workflow. Live URL fetching needs a server; saved HTML converts locally.',
+    intro: 'URL to Markdown is different from file conversion because browsers cannot fetch arbitrary pages because of CORS. The current private workflow is to save page HTML and convert it locally; a hardened server fetcher is planned separately.',
+    inputLabel: 'Saved webpage HTML or live URL plan',
+    example: {
+      input: 'https://example.com',
+      output: '# Example Domain\n\nThis domain is for use in illustrative examples.',
+      note: 'Live URL fetching is planned as a server-side feature with SSRF and abuse protections. Saved HTML works in the browser today.',
+    },
+    steps: ['For privacy today, save the page HTML locally.', 'Drop the HTML file into To Markdown with readable extraction enabled.', 'Use a future server URL converter only for public pages you are allowed to fetch.'],
+    faq: [
+      { q: 'Why not fetch URLs entirely in the browser?', a: 'Browsers enforce CORS, so most arbitrary webpages cannot be fetched directly from a client-side tool.' },
+      { q: 'Is live URL conversion no-upload?', a: 'No. A live URL converter requires a server to fetch the page. Saved HTML conversion remains browser-side.' },
+      reviewFaq,
+    ],
+    related: ['webpage-to-markdown', 'html-to-markdown', 'rss-to-markdown', 'to-markdown'],
+    availability: 'server',
+  }),
+  markdownPage({
+    slug: 'webpage-to-markdown',
+    title: 'Webpage to Markdown Converter',
+    h1: 'Webpage to Markdown',
+    description: 'Convert saved webpage HTML to Markdown locally, with live URL conversion planned server-side.',
+    intro: 'Webpage to Markdown is best handled locally by saving the page HTML first. Live webpage fetching needs a server-side component with SSRF protection and rate limits.',
+    inputLabel: 'Saved webpage HTML',
+    example: {
+      input: 'saved-page.html',
+      output: '# Article title\n\nClean article text converted from saved HTML.',
+    },
+    steps: ['Save the webpage as HTML.', 'Choose the file in To Markdown.', 'Review the readable article extraction result.'],
+    faq: [
+      privacyFaq,
+      { q: 'Can it remove headers and footers?', a: 'Readable article extraction can remove common page chrome before Markdown conversion.' },
+      { q: 'When will live webpage fetching work?', a: 'It is a planned server-side feature because it needs careful SSRF, redirect, content-type and rate-limit protections.' },
+    ],
+    related: ['url-to-markdown', 'html-to-markdown', 'rss-to-markdown', 'to-markdown'],
+    availability: 'server',
+  }),
+  markdownPage({
+    slug: 'image-to-markdown',
+    title: 'Image to Markdown OCR Workflow',
+    h1: 'Image to Markdown',
+    description: 'Prepare image text for Markdown with OCR, then convert or edit the extracted text. Direct OCR is planned.',
+    intro: 'Image to Markdown usually means OCR first, Markdown cleanup second. Direct browser OCR is planned, but the current To Markdown tool accepts extracted OCR text rather than image files.',
+    inputLabel: 'Image text from OCR',
+    example: {
+      input: 'Screenshot OCR text: Launch checklist - QA - Docs - Release',
+      output: '# Launch checklist\n\n- QA\n- Docs\n- Release',
+      note: 'Direct image OCR is not enabled yet because it adds a large WASM dependency.',
+    },
+    steps: ['Run OCR with your preferred local OCR tool.', 'Paste the extracted text into To Markdown.', 'Format headings, lists and tables as Markdown.'],
+    faq: [
+      { q: 'Can I drop an image file today?', a: 'No. Direct image OCR is planned for a later release; paste OCR text for now.' },
+      { q: 'Will image OCR upload my screenshot?', a: 'The planned version is intended to run in the browser. Until then, choose an OCR tool that matches your privacy needs.' },
+      reviewFaq,
+    ],
+    related: ['pdf-to-markdown', 'to-markdown', 'markdown-preview', 'html-to-markdown'],
+    availability: 'planned',
+  }),
+];

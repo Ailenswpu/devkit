@@ -89,6 +89,11 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
     output: '<h1>Hello</h1><p><strong>bold</strong> and <code>code</code></p>',
     note: 'Rendered HTML is sanitized with DOMPurify before display.',
   },
+  'to-markdown': {
+    input: '<article><h1>Guide</h1><p>Hello <a href="https://inbrowser.sh">inbrowser.sh</a>.</p></article>',
+    output: '# Guide\n\nHello [inbrowser.sh](https://inbrowser.sh).',
+    note: 'Files and pasted content are converted locally; PDF output is text-only and can lose layout.',
+  },
   'timestamp': {
     input: '1719792000 seconds',
     output: 'UTC: Mon, 01 Jul 2024 00:00:00 GMT | ISO: 2024-07-01T00:00:00.000Z',

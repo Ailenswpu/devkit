@@ -38,6 +38,7 @@ export interface Tool {
     | 'LoremIpsum'
     | 'MockDataGenerator'
     | 'MarkdownPreview'
+    | 'ToMarkdown'
     | 'JsonToCsv'
     | 'JsonToYaml'
     | 'TimestampTool'
@@ -476,6 +477,29 @@ export const TOOLS: Tool[] = [
       { q: 'Does it support tables and code blocks?', a: 'Yes. GFM is enabled.' },
     ],
     componentId: 'MarkdownPreview',
+  },
+  {
+    slug: 'to-markdown',
+    title: 'To Markdown',
+    h1: 'All to Markdown Converter',
+    subtitle: 'Convert files and pasted content to Markdown locally in your browser.',
+    description: 'Free all-to-Markdown converter for HTML, DOCX, XLSX, CSV, TSV, PPTX, JSON, PDF, RSS, RTF and text. No upload.',
+    category: 'Web',
+    keywords: ['to markdown', 'html to markdown', 'docx to markdown', 'pdf to markdown', 'csv to markdown', 'all to markdown'],
+    related: ['markdown-preview', 'json-to-csv', 'html-entities'],
+    intro: 'To Markdown converts common files and pasted content into Markdown for docs, READMEs, RAG pipelines and LLM context preparation. Files are parsed in the browser, so document contents do not need to leave your device.',
+    howto: [
+      'Drop a supported file or paste HTML, JSON, CSV, TSV, RSS, Markdown or plain text.',
+      'Choose output options such as links, images, GFM tables, heading cleanup and front matter.',
+      'Review the Markdown output, preview it, then copy or download a .md file.',
+    ],
+    faq: [
+      { q: 'Are files uploaded to inbrowser.sh?', a: 'No. File conversion runs client-side in your browser. The page may download parser code, but your file contents are not sent to a server.' },
+      { q: 'Which formats are supported?', a: 'HTML, DOCX, XLSX/XLS, CSV, TSV, PPTX, JSON, PDF, RSS/XML, RTF, TXT and existing Markdown are supported in this release.' },
+      { q: 'How accurate is PDF to Markdown?', a: 'PDF conversion is best-effort text extraction. Tables, columns, images and exact layout can be lossy, so review the output before using it.' },
+      { q: 'Does it convert live web URLs?', a: 'Live URL fetching needs a server-side fetcher because browsers enforce CORS. Use saved HTML with this client-side tool; the server URL converter is planned separately.' },
+    ],
+    componentId: 'ToMarkdown',
   },
   {
     slug: 'timestamp',
