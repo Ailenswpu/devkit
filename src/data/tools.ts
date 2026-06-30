@@ -36,6 +36,7 @@ export interface Tool {
     | 'ColorConverter'
     | 'QrCode'
     | 'LoremIpsum'
+    | 'MockDataGenerator'
     | 'MarkdownPreview'
     | 'JsonToCsv'
     | 'JsonToYaml'
@@ -249,7 +250,7 @@ export const TOOLS: Tool[] = [
     description: 'Free online UUID generator. Create UUID v4, UUID v7, ULID and NanoID in bulk. No signup, no upload — all client-side.',
     category: 'Generators',
     keywords: ['uuid generator', 'uuid v4', 'uuid v7', 'ulid', 'nanoid'],
-    related: ['hash-generator', 'qr-code'],
+    related: ['mock-data-generator', 'hash-generator', 'qr-code'],
     intro: 'UUIDs are 128-bit identifiers used everywhere from database primary keys to session tokens. ULIDs and NanoIDs offer sortable or shorter alternatives.',
     howto: [
       'Pick a format (UUID v4, v7, ULID, NanoID).',
@@ -262,6 +263,29 @@ export const TOOLS: Tool[] = [
       { q: 'When should I use a NanoID?', a: 'When you need shorter, URL-safe IDs while keeping low collision risk.' },
     ],
     componentId: 'UuidGenerator',
+  },
+  {
+    slug: 'mock-data-generator',
+    title: 'Mock Data Generator',
+    h1: 'Mock Data Generator',
+    subtitle: 'Generate users, orders and product fixtures as JSON, CSV or SQL — locally in your browser.',
+    description: 'Free mock data generator for JSON, CSV and SQL test fixtures. Create synthetic users, orders and products locally with no upload.',
+    category: 'Generators',
+    keywords: ['mock data generator', 'test data generator', 'random csv generator', 'sql insert generator', 'sample json generator'],
+    related: ['json-to-csv', 'uuid-generator', 'lorem-ipsum'],
+    intro: 'Mock Data Generator creates synthetic fixture rows for development, QA, seed data and demos. Generate users, orders or products, then export as JSON, CSV or SQL insert statements without sending data to a server.',
+    howto: [
+      'Choose a dataset: users, orders or products.',
+      'Pick JSON, CSV or SQL output and the number of rows.',
+      'Click Generate, review the synthetic records and copy the output.',
+    ],
+    faq: [
+      { q: 'Is this generated data real customer data?', a: 'No. The rows are synthetic placeholders for development, QA and demos.' },
+      { q: 'Does the generator upload anything?', a: 'No. Data generation and export formatting run entirely in your browser.' },
+      { q: 'Can I use the SQL output directly?', a: 'Use it as a quick fixture starter, then review table names, column names and data types before running it in any database.' },
+      { q: 'How many rows can I generate?', a: 'The browser tool caps output at 100 rows to keep the page responsive and easy to inspect.' },
+    ],
+    componentId: 'MockDataGenerator',
   },
   {
     slug: 'regex-tester',

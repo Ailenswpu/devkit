@@ -20,6 +20,7 @@ import NumberBase from '../components/tools/NumberBase';
 import ColorConverter from '../components/tools/ColorConverter';
 import QrCode from '../components/tools/QrCode';
 import LoremIpsum from '../components/tools/LoremIpsum';
+import MockDataGenerator from '../components/tools/MockDataGenerator';
 import MarkdownPreview from '../components/tools/MarkdownPreview';
 import JsonToCsv from '../components/tools/JsonToCsv';
 import JsonToYaml from '../components/tools/JsonToYaml';
@@ -103,6 +104,7 @@ const cid = tool.componentId;
       {cid === 'ColorConverter' && <ColorConverter client:load />}
       {cid === 'QrCode' && <QrCode client:load />}
       {cid === 'LoremIpsum' && <LoremIpsum client:load />}
+      {cid === 'MockDataGenerator' && <MockDataGenerator client:load />}
       {cid === 'MarkdownPreview' && <MarkdownPreview client:only="preact" />}
       {cid === 'JsonToCsv' && <JsonToCsv client:load />}
       {cid === 'JsonToYaml' && <JsonToYaml client:load />}

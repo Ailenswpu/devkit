@@ -1,1 +1,3 @@
+https://inbrowser.sh/sitemap.xml https://inbrowser.sh/sitemap-index.xml 301
+/sitemap.xml /sitemap-index.xml 301
 https://www.inbrowser.sh/* https://inbrowser.sh/:splat 301

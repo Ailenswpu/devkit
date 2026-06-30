@@ -44,6 +44,11 @@ export const TOOL_EXAMPLES: Record<string, { input: string; output: string; note
     output: '3f29c1d0-7b8c-4f5e-9c2a-1d4e8f6a3b21',
     note: 'Pick v7 for time-ordered IDs that index well in databases.',
   },
+  'mock-data-generator': {
+    input: 'Users, 2 rows, JSON',
+    output: '[{"id":1,"full_name":"Ada Lovelace","email":"ada.lovelace1@example.com"},{"id":2,"full_name":"Grace Hopper","email":"grace.hopper2@test.local"}]',
+    note: 'Also exports CSV and SQL insert statements for users, orders and products.',
+  },
   'regex-tester': {
     input: 'pattern: (\\w+)@(\\w+\\.\\w+), test: support@inbrowser.sh',
     output: 'Match: support@inbrowser.sh | Group 1: support | Group 2: inbrowser.sh',

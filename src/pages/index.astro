@@ -16,6 +16,7 @@ const description = 'A growing set of fast, private developer tools — JSON, Ba
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         <a href="/json-formatter" class="btn btn-primary">Try JSON Formatter</a>
+        <a href="/mock-data-generator" class="btn">Mock data</a>
         <a href="/timestamp-now" class="btn">Current timestamp</a>
         <a href="/cron" class="btn">Cron parser</a>
         <button id="open-cmdk" class="btn" type="button">
@@ -29,6 +30,36 @@ const description = 'A growing set of fast, private developer tools — JSON, Ba
 
   <section class="max-w-6xl mx-auto px-4 pb-16">
     <ToolGrid />
+  </section>
+
+  <section class="border-t border-border">
+    <div class="max-w-6xl mx-auto px-4 py-14 grid gap-8 md:grid-cols-[1.1fr_1.9fr]">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight">Mock data for tests and demos</h2>
+        <p class="mt-3 text-muted leading-7">
+          Generate synthetic users, orders and products as JSON, CSV or SQL. Use it for QA fixtures,
+          seed data, documentation examples and local demos without using real customer records.
+        </p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a class="card p-4 block hover:border-accent/60" href="/mock-data-generator">
+          <h3 class="font-semibold">Mock data generator</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Create users, orders and products locally in your browser.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/random-csv-generator">
+          <h3 class="font-semibold">Random CSV generator</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Generate small CSV samples for imports, spreadsheets and parser tests.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/sql-insert-generator">
+          <h3 class="font-semibold">SQL insert generator</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Draft local fixture rows as simple INSERT statements.</p>
+        </a>
+        <a class="card p-4 block hover:border-accent/60" href="/sample-json-generator">
+          <h3 class="font-semibold">Sample JSON generator</h3>
+          <p class="mt-2 text-sm text-muted leading-6">Create readable JSON arrays for API docs and frontend tests.</p>
+        </a>
+      </div>
+    </div>
   </section>
 
   <section class="border-t border-border">
