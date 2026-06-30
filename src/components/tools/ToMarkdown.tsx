@@ -35,6 +35,15 @@ const SAMPLE_HTML = `<article>
   </ul>
 </article>`;
 
+const SAMPLE_MARKDOWN = `inbrowser.sh keeps file conversion local.
+
+- No upload
+- GitHub-flavored tables
+`;
+
+const EMPTY_STATUS = 'Paste HTML, JSON, CSV, TSV or choose a document file.';
+const SAMPLE_STATUS = 'HTML converted locally: Convert browser files to Markdown';
+
 const DEFAULT_OPTIONS: Options = {
   readability: true,
   keepLinks: true,
@@ -51,9 +60,9 @@ marked.setOptions({ gfm: true, breaks: false });
 export default function ToMarkdown() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [sourceText, setSourceText] = useState(SAMPLE_HTML);
-  const [markdown, setMarkdown] = useState('');
+  const [markdown, setMarkdown] = useState(SAMPLE_MARKDOWN);
   const [fileName, setFileName] = useState('');
-  const [status, setStatus] = useState('Paste HTML, JSON, CSV, TSV or choose a document file.');
+  const [status, setStatus] = useState(SAMPLE_STATUS);
   const [error, setError] = useState('');
   const [notices, setNotices] = useState<string[]>([]);
   const [outputMode, setOutputMode] = useState<OutputMode>('markdown');
@@ -122,11 +131,21 @@ export default function ToMarkdown() {
     setFileName('');
     setError('');
     setNotices([]);
-    setStatus('Paste HTML, JSON, CSV, TSV or choose a document file.');
+    setStatus(EMPTY_STATUS);
   }
 
   function setOption(key: keyof Options, value: boolean) {
     setOptions((current) => ({ ...current, [key]: value }));
+  }
+
+  function loadSample() {
+    setSourceText(SAMPLE_HTML);
+    setMarkdown(SAMPLE_MARKDOWN);
+    setFileName('');
+    setError('');
+    setNotices([]);
+    setStatus(SAMPLE_STATUS);
+    setOutputMode('markdown');
   }
 
   return (
@@ -184,7 +203,7 @@ export default function ToMarkdown() {
         <Panel
           title="Input"
           action={
-            <button type="button" class="btn btn-ghost text-xs" onClick={() => setSourceText(SAMPLE_HTML)}>
+            <button type="button" class="btn btn-ghost text-xs" onClick={loadSample}>
               Load sample
             </button>
           }
