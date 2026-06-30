@@ -23,6 +23,12 @@ interface ConversionResult {
   notices: string[];
 }
 
+interface ToMarkdownProps {
+  showTextInput?: boolean;
+  initialMarkdown?: string;
+  initialStatus?: string;
+}
+
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const CONVERT_TIMEOUT_MS = 30000;
 
@@ -57,12 +63,12 @@ const FORMAT_LABELS = ['HTML', 'PDF', 'DOCX', 'XLSX', 'CSV', 'JSON', 'PPTX', 'RS
 
 marked.setOptions({ gfm: true, breaks: false });
 
-export default function ToMarkdown() {
+export default function ToMarkdown({ showTextInput = true, initialMarkdown, initialStatus }: ToMarkdownProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [sourceText, setSourceText] = useState(SAMPLE_HTML);
-  const [markdown, setMarkdown] = useState(SAMPLE_MARKDOWN);
+  const [sourceText, setSourceText] = useState(showTextInput ? SAMPLE_HTML : '');
+  const [markdown, setMarkdown] = useState(initialMarkdown ?? (showTextInput ? SAMPLE_MARKDOWN : ''));
   const [fileName, setFileName] = useState('');
-  const [status, setStatus] = useState(SAMPLE_STATUS);
+  const [status, setStatus] = useState(initialStatus ?? (showTextInput ? SAMPLE_STATUS : EMPTY_STATUS));
   const [error, setError] = useState('');
   const [notices, setNotices] = useState<string[]>([]);
   const [outputMode, setOutputMode] = useState<OutputMode>('markdown');
@@ -164,9 +170,11 @@ export default function ToMarkdown() {
               <UploadCloud size={20} aria-hidden="true" />
             </div>
             <div>
-              <div class="font-semibold tracking-tight">Drop a file or paste content</div>
+              <div class="font-semibold tracking-tight">{showTextInput ? 'Drop a file or paste content' : 'Drop a file'}</div>
               <div class="mt-1 text-sm text-muted">
-                HTML, DOCX, XLSX, CSV, TSV, PPTX, JSON, PDF, RSS, RTF, TXT and Markdown files stay in this browser.
+                {showTextInput
+                  ? 'HTML, DOCX, XLSX, CSV, TSV, PPTX, JSON, PDF, RSS, RTF, TXT and Markdown files stay in this browser.'
+                  : 'Choose or drop a supported file. Conversion stays in this browser.'}
               </div>
               <div class="mt-3 flex flex-wrap gap-1.5">
                 {FORMAT_LABELS.map((label) => (
@@ -180,10 +188,12 @@ export default function ToMarkdown() {
               <FileText size={16} aria-hidden="true" />
               Choose file
             </button>
-            <button type="button" class="btn disabled:cursor-not-allowed disabled:opacity-55" onClick={runTextConversion} disabled={busy}>
-              {busy ? <Loader2 class="animate-spin" size={16} aria-hidden="true" /> : <FileText size={16} aria-hidden="true" />}
-              Convert pasted text
-            </button>
+            {showTextInput && (
+              <button type="button" class="btn disabled:cursor-not-allowed disabled:opacity-55" onClick={runTextConversion} disabled={busy}>
+                {busy ? <Loader2 class="animate-spin" size={16} aria-hidden="true" /> : <FileText size={16} aria-hidden="true" />}
+                Convert pasted text
+              </button>
+            )}
             <button type="button" class="btn btn-ghost" onClick={clearAll}>
               <X size={16} aria-hidden="true" />
               Clear
@@ -192,7 +202,7 @@ export default function ToMarkdown() {
         </div>
         <input
           ref={inputRef}
-          class="sr-only"
+          hidden
           type="file"
           accept=".html,.htm,.docx,.xlsx,.xls,.csv,.tsv,.pptx,.json,.pdf,.xml,.rss,.rtf,.txt,.md,text/html,text/csv,application/json,application/pdf,application/rss+xml"
           onChange={(event) => void handleFiles((event.target as HTMLInputElement).files || [])}
@@ -200,29 +210,31 @@ export default function ToMarkdown() {
       </div>
 
       <div class="grid gap-5">
-        <Panel
-          title="Input"
-          action={
-            <button type="button" class="btn btn-ghost text-xs" onClick={loadSample}>
-              Load sample
-            </button>
-          }
-        >
-          <textarea
-            spellcheck={false}
-            value={sourceText}
-            onInput={(event) => setSourceText((event.target as HTMLTextAreaElement).value)}
-            onPaste={(event) => {
-              const files = event.clipboardData?.files;
-              if (files && files.length > 0) {
-                event.preventDefault();
-                void handleFiles(files);
-              }
-            }}
-            placeholder="Paste HTML, JSON, CSV, TSV, RSS, Markdown or plain text..."
-            aria-label="Content to convert to Markdown"
-          />
-        </Panel>
+        {showTextInput && (
+          <Panel
+            title="Input"
+            action={
+              <button type="button" class="btn btn-ghost text-xs" onClick={loadSample}>
+                Load sample
+              </button>
+            }
+          >
+            <textarea
+              spellcheck={false}
+              value={sourceText}
+              onInput={(event) => setSourceText((event.target as HTMLTextAreaElement).value)}
+              onPaste={(event) => {
+                const files = event.clipboardData?.files;
+                if (files && files.length > 0) {
+                  event.preventDefault();
+                  void handleFiles(files);
+                }
+              }}
+              placeholder="Paste HTML, JSON, CSV, TSV, RSS, Markdown or plain text..."
+              aria-label="Content to convert to Markdown"
+            />
+          </Panel>
+        )}
 
         <Panel
           title="Markdown output"

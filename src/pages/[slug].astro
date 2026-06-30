@@ -20,6 +20,10 @@ const { kind, tool, variant, conversion } = Astro.props;
 const page = variant || conversion;
 const parentTool = page ? TOOLS_BY_SLUG.get(page.toolSlug) : null;
 const availability = conversion?.availability || 'client';
+const showMarkdownTextInput = conversion?.markdownInputMode !== 'file';
+const markdownInitialStatus = showMarkdownTextInput
+  ? undefined
+  : `Example Markdown shown. Choose ${conversion?.inputLabel || 'a file'} to convert locally.`;
 const relatedPages = page?.related.map((slug: string) => {
   const relatedTool = TOOLS_BY_SLUG.get(slug);
   if (relatedTool) return { slug, title: relatedTool.title, description: relatedTool.subtitle };
@@ -127,7 +131,12 @@ const pageJsonLd = page ? [
 
       {conversion?.toolSlug === 'to-markdown' && (
         <section aria-label={`${page.title} workspace`} class="tool-shell card p-4 md:p-6 mt-8">
-          <ToMarkdown client:only="preact" />
+          <ToMarkdown
+            client:only="preact"
+            showTextInput={showMarkdownTextInput}
+            initialMarkdown={showMarkdownTextInput ? undefined : conversion.example.output}
+            initialStatus={markdownInitialStatus}
+          />
         </section>
       )}
 

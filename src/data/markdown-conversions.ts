@@ -61,6 +61,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['to-markdown', 'docx-to-markdown', 'image-to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'docx-to-markdown',
@@ -80,6 +81,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['word-to-markdown', 'google-docs-to-markdown', 'to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'word-to-markdown',
@@ -99,6 +101,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['docx-to-markdown', 'google-docs-to-markdown', 'to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'pptx-to-markdown',
@@ -119,6 +122,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['powerpoint-to-markdown', 'to-markdown', 'markdown-preview', 'pdf-to-markdown'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'powerpoint-to-markdown',
@@ -138,6 +142,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['pptx-to-markdown', 'to-markdown', 'pdf-to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'xlsx-to-markdown',
@@ -157,6 +162,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['excel-to-markdown', 'csv-to-markdown', 'to-markdown', 'json-to-markdown'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'excel-to-markdown',
@@ -176,6 +182,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['xlsx-to-markdown', 'csv-to-markdown', 'to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'csv-to-markdown',
@@ -233,6 +240,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['html-to-markdown', 'csv-to-markdown', 'to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'google-docs-to-markdown',
@@ -252,6 +260,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['docx-to-markdown', 'word-to-markdown', 'html-to-markdown', 'to-markdown'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'rtf-to-markdown',
@@ -272,6 +281,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
       reviewFaq,
     ],
     related: ['word-to-markdown', 'docx-to-markdown', 'to-markdown', 'markdown-preview'],
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'rss-to-markdown',
@@ -312,6 +322,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
     ],
     related: ['webpage-to-markdown', 'html-to-markdown', 'rss-to-markdown', 'to-markdown'],
     availability: 'server',
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'webpage-to-markdown',
@@ -332,6 +343,7 @@ export const MARKDOWN_CONVERSION_PAGES: ConversionPage[] = [
     ],
     related: ['url-to-markdown', 'html-to-markdown', 'rss-to-markdown', 'to-markdown'],
     availability: 'server',
+    markdownInputMode: 'file',
   }),
   markdownPage({
     slug: 'image-to-markdown',

@@ -14,6 +14,7 @@ export interface ConversionPage {
   faq: { q: string; a: string }[];
   related: string[];
   availability?: 'client' | 'server' | 'planned';
+  markdownInputMode?: 'text' | 'file';
 }
 
 export const CONVERSION_PAGES: ConversionPage[] = [
