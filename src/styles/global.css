@@ -34,7 +34,7 @@ body { font-family: theme('fontFamily.sans'); -webkit-font-smoothing: antialiase
 
 a { color: inherit; }
 
-.tool-shell input:not([type="checkbox"]):not([type="radio"]),
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 .tool-shell textarea,
 .tool-shell select {
   display: block;
@@ -54,12 +54,12 @@ a { color: inherit; }
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .03);
   transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
-:root.dark .tool-shell input:not([type="checkbox"]):not([type="radio"]),
+:root.dark .tool-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 :root.dark .tool-shell textarea,
 :root.dark .tool-shell select {
   color-scheme: dark;
 }
-.tool-shell input:not([type="checkbox"]):not([type="radio"]),
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
 .tool-shell select {
   min-height: 42px;
 }
@@ -68,7 +68,7 @@ a { color: inherit; }
   min-height: clamp(220px, 34vh, 360px);
   tab-size: 2;
 }
-.tool-shell input:not([type="checkbox"]):not([type="radio"]):hover,
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
 .tool-shell textarea:hover,
 .tool-shell select:hover {
   border-color: rgb(var(--muted) / .65);
@@ -90,7 +90,7 @@ a { color: inherit; }
   flex: 0 0 auto;
   accent-color: rgb(var(--accent));
 }
-.tool-shell input:not([type="checkbox"]):not([type="radio"]):focus,
+.tool-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
 .tool-shell textarea:focus,
 .tool-shell select:focus {
   border-color: rgb(var(--accent));

@@ -180,7 +180,7 @@ export default function ToMarkdown() {
         />
       </div>
 
-      <div class="grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+      <div class="grid gap-5">
         <Panel
           title="Input"
           action={
